@@ -1,0 +1,29 @@
+# Robots.txt para IP República Bolivariana de Venezuela
+# Sitio web educativo - Centro de formación técnica
+
+User-agent: *
+Allow: /
+
+# Disallow páginas administrativas
+Disallow: /javascript/
+Disallow: /assets/
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Sitemap
+Sitemap: https://iprbv.edu.cu/sitemap.xml
+
+# User-agent: Google
+User-agent: Googlebot
+Allow: /
+
+# User-agent: Bing
+User-agent: Bingbot
+Allow: /
+
+# User-agent: Yahoo
+User-agent: Slurp
+Allow: /
+
+# Archivos especiales
+Allow: /sitemap.xml

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especialidad de Informática - IP República Bolivariana de Venezuela</title>
+    <link rel="icon" href="assets/icon-512.webp" type="image/webp">
+    <meta name="description" content="Especialidad de Informática del IP República Bolivariana de Venezuela. Formación en programación, redes, bases de datos y desarrollo de software. 59 estudiantes matriculados.">
+    <meta property="og:title" content="Especialidad de Informática - IP República Bolivariana de Venezuela">
+    <meta property="og:description" content="Formación técnica en programación, redes, bases de datos y desarrollo de software.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://iprbv.edu.cu/pagina-informatica.html">
+    <link rel="canonical" href="https://iprbv.edu.cu/pagina-informatica.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .specialty-header {
+            background: linear-gradient(135deg, #0a2463, #061a42);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .specialty-icon-large {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+
+        .specialty-content {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            color: #0a2463;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .content-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .stat-highlight {
+            background: linear-gradient(135deg, #0a2463, #061a42);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #0a2463, #061a42);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        .students-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .student-group {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .group-header {
+            background: rgba(212, 175, 55, 0.9);
+            color: #0a2463;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .student-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .student-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .student-list li:last-child {
+            border-bottom: none;
+        }
+
+        .student-count {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 992px) {
+            .students-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .students-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="preloader" id="preloader" aria-hidden="true">
+        <div class="preloader-spinner"></div>
+    </div>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="assets/icon-512.webp" alt="Logo" width="50" height="50">
+                <div class="logo-text">
+                    <div class="logo-title">IP República Bolivariana de Venezuela</div>
+                    <div class="logo-subtitle">Formando técnicos para el futuro</div>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="pagina-informatica.html" class="nav-link active">Informática</a></li>
+                    <li><a href="pagina-electronica.html" class="nav-link">Electrónica</a></li>
+                    <li><a href="pagina-automatica.html" class="nav-link">Automática</a></li>
+                    <li><a href="gallery.html" class="nav-link">Galería</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar modo oscuro/claro">🌙</button>
+                <button class="hamburger" id="hamburger" aria-label="Menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+    <section class="specialty-header">
+        <div class="container">
+            <i class="fas fa-laptop-code specialty-icon-large"></i>
+            <h1>Técnico en Informática</h1>
+            <p class="hero-subtitle">Formación en programación, desarrollo de software y tecnología</p>
+        </div>
+    </section>
+
+    <section class="specialty-content">
+        <div class="container">
+            <h2 class="section-title">Descripción de la Especialidad</h2>
+            <div class="content-section">
+                <p>La especialidad de Informática forma profesionales capacitados en programación, desarrollo de
+                    software, gestión de bases de datos y mantenimiento de sistemas informáticos. Los estudiantes
+                    aprenden las tecnologías más actuales del mercado preparándolos para enfrentar los desafíos del
+                    mundo digital.</p>
+                
+                <div class="stat-highlight">
+                    <div class="student-count">59</div>
+                    <p style="font-size: 1.2rem; margin-bottom: 30px;">Estudiantes matriculados</p>
+                    
+                    <div class="students-container">
+                        <!-- Grupo I-11 (1er Año) -->
+                        <div class="student-group">
+                            <div class="group-header">Grupo I-11 (1er Año) - 15 estudiantes</div>
+                            <ul class="student-list">
+                                <li>Saile Correa Perez</li>
+                                <li>Ediel Cuba Domingez</li>
+                                <li>Liah Gil Martinez</li>
+                                <li>Anyelo Gonzalez De Los Santos</li>
+                                <li>Iban Jose Gutierrez Panegue</li>
+                                <li>Lester Hernandez Palenzuela</li>
+                                <li>Angely Martínez Rodríguez</li>
+                                <li>Elien Mederos Tamayo</li>
+                                <li>Cesar Luis Padilla Alvarez</li>
+                                <li>Livan De Jesus Parodis Hevia</li>
+                                <li>Daniel Alejandro Ruíz Nuñez</li>
+                                <li>Yailenis De Los Angeles Salseiro Lara</li>
+                                <li>Edyan Freddy Suarez Posada</li>
+                                <li>Keyla Velazquez Torres</li>
+                                <li>Roberto Raul Velazquez Ramirez</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Grupo I-21 (2do Año) -->
+                        <div class="student-group">
+                            <div class="group-header">Grupo I-21 (2do Año) - 15 estudiantes</div>
+                            <ul class="student-list">
+                                <li>Brayan Daniel Alvarez Mederos</li>
+                                <li>Jean Carlos Alvarez Morales</li>
+                                <li>Disnel Carrazana Fernández</li>
+                                <li>Josue Otoniel Garcia Pichardo</li>
+                                <li>Anthony Yoei Gonzales Sanchez</li>
+                                <li>Darelis Mora Martínez</li>
+                                <li>Aljandro Nieblas Cruz</li>
+                                <li>Maria Karla Nuñez Perosa</li>
+                                <li>Yoan Manuel Onel Daud</li>
+                                <li>Cesar Alejandro Perez Sanchez</li>
+                                <li>Dayanis Prieto Saavedra</li>
+                                <li>Yandy Ricardo Alonso</li>
+                                <li>Yorlan Yamel Rodriguez Duran</li>
+                                <li>Reyni Rodriguez Cruzata</li>
+                                <li>Emely Valentin León</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Grupo I-31 (3er Año) -->
+                        <div class="student-group">
+                            <div class="group-header">Grupo I-31 (3er Año) - 29 estudiantes</div>
+                            <ul class="student-list">
+                                <li>Camila Aguilar Espinosa</li>
+                                <li>Sheyla Alfonso Gonzalez</li>
+                                <li>Yorisley Alvarez Toledo</li>
+                                <li>Delenis Arias Leyans</li>
+                                <li>Brayan Avila Piñero</li>
+                                <li>Lazaro Elody Barrios Roche</li>
+                                <li>Dayanis De La C Borges Guitarte</li>
+                                <li>Lorena Cabrales Suarez</li>
+                                <li>Davisnel Carrazana Fernandez</li>
+                                <li>Dairon Xaviel Cuellar Garcia</li>
+                                <li>Hanley Diaz Padron</li>
+                                <li>Melissa Dominguez Ultra</li>
+                                <li>Alejandro Jesus Esteves Chavez</li>
+                                <li>Addiel Gonzales Alvarez</li>
+                                <li>Alexander Bueno Gutierrez</li>
+                                <li>Jaison M Herreira Romero</li>
+                                <li>Raudel Hernandez Gonzalez</li>
+                                <li>Crithofer Hernandez Diaz</li>
+                                <li>Addiel Legrá Pauiner</li>
+                                <li>Frank David Leyva Sanchez</li>
+                                <li>Marcos M Martinez Montenegro</li>
+                                <li>Yadiel Migenes Hernandez</li>
+                                <li>Oslaidys Morales Ramires</li>
+                                <li>Melany A Portela Gil</li>
+                                <li>Adrian Rodriguez Velazquez</li>
+                                <li>Yeny Laura Torres Herrera</li>
+                                <li>Melany Vento</li>
+                                <li>Luis Alberto Pérez</li>
+                                <li>María Fernanda López</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="contacto.html" class="btn">
+                    <i class="fas fa-user-plus"></i>
+                    Inscribirse en Informática
+                </a>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 IP República Bolivariana de Venezuela. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="javascript/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Fotos - IP República Bolivariana de Venezuela</title>
+    <link rel="icon" href="assets/icon-512.webp" type="image/webp">
+    <meta name="description" content="Galería de fotos del IP República Bolivariana de Venezuela. Imágenes de actividades, instalaciones, graduaciones y eventos del centro.">
+    <meta property="og:title" content="Galería de Fotos - IP República Bolivariana de Venezuela">
+    <meta property="og:description" content="Imágenes de actividades, instalaciones y eventos del centro educativo.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://iprbv.edu.cu/gallery.html">
+    <link rel="canonical" href="https://iprbv.edu.cu/gallery.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .gallery-page { padding: 120px 0 60px; }
+        .gallery-page h1 { text-align: center; color: var(--primary); font-size: 2.5rem; margin-bottom: 10px; }
+        .gallery-page .subtitle { text-align: center; color: var(--gray); margin-bottom: 40px; font-size: 1.1rem; }
+        .gallery-row { display: flex; gap: 20px; margin-bottom: 20px; }
+        .gallery-row .gallery-item { flex: 1; }
+        .gallery-item img { width: 100%; height: 300px; object-fit: cover; display: block; border-radius: var(--border-radius); }
+        .gallery-item .gallery-content { padding: 15px; background: var(--light); border-radius: 0 0 var(--border-radius) var(--border-radius); }
+        .gallery-item .gallery-content p { color: var(--dark); font-size: 0.95rem; line-height: 1.4; text-align: center; font-weight: 500; margin: 0; }
+        .item-small { flex: 1; }
+        .item-medium { flex: 2; }
+        .item-large { flex: 3; }
+        .item-half { flex: 1; }
+        @media (max-width: 768px) {
+            .gallery-row { flex-direction: column; }
+            .gallery-item img { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader" id="preloader" aria-hidden="true">
+        <div class="preloader-spinner"></div>
+    </div>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="assets/icon-512.webp" alt="Logo" width="50" height="50">
+                <div class="logo-text">
+                    <div class="logo-title">IP República Bolivariana de Venezuela</div>
+                    <div class="logo-subtitle">Formando técnicos para el futuro</div>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="pagina-informatica.html" class="nav-link">Informática</a></li>
+                    <li><a href="pagina-electronica.html" class="nav-link">Electrónica</a></li>
+                    <li><a href="pagina-automatica.html" class="nav-link">Automática</a></li>
+                    <li><a href="gallery.html" class="nav-link active">Galería</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar modo oscuro/claro">🌙</button>
+                <button class="hamburger" id="hamburger" aria-label="Menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container gallery-page">
+        <h1>Galería de Fotos</h1>
+        <p class="subtitle">Memorias de Nuestro Centro</p>
+
+        <div class="gallery-row">
+            <div class="gallery-item item-small">
+                <img src="assets/imagenes del centro (14).webp" alt="Entrada de la escuela" loading="lazy">
+                <div class="gallery-content"><p>Entrada de la escuela en una actividad en Abril</p></div>
+            </div>
+            <div class="gallery-item item-small">
+                <img src="assets/imagenes del centro (11).webp" alt="Estudiantes 2023" loading="lazy">
+                <div class="gallery-content"><p>Foto de Nuestros Estudiantes 2023</p></div>
+            </div>
+            <div class="gallery-item item-small">
+                <img src="assets/imagenes del centro (17).webp" alt="Reunión de padres" loading="lazy">
+                <div class="gallery-content"><p>Reunión de padres con la directora del centro y la vida interna de la escuela 2024</p></div>
+            </div>
+        </div>
+
+        <div class="gallery-row">
+            <div class="gallery-item item-medium">
+                <img src="assets/imagenes del centro (19).webp" alt="Educación física" loading="lazy">
+                <div class="gallery-content"><p>Actividad de educación física escolar</p></div>
+            </div>
+            <div class="gallery-item item-medium">
+                <img src="assets/imagenes del centro (3).webp" alt="Graduación 2024" loading="lazy">
+                <div class="gallery-content"><p>Graduación del centro 2024</p></div>
+            </div>
+        </div>
+
+        <div class="gallery-row">
+            <div class="gallery-item item-half">
+                <img src="assets/imagenes del centro (4).webp" alt="Directora con graduada" loading="lazy">
+                <div class="gallery-content"><p>Foto de la directora del centro con una graduada del 2024</p></div>
+            </div>
+            <div class="gallery-item item-half">
+                <img src="assets/imagenes del centro (6).webp" alt="Discurso graduación" loading="lazy">
+                <div class="gallery-content"><p>Foto de la profe dando un discurso al público presente en la graduación 2024</p></div>
+            </div>
+        </div>
+
+        <div class="gallery-row">
+            <div class="gallery-item item-small">
+                <img src="assets/IMG_20251017_093353.webp" alt="Huerto escolar" loading="lazy">
+                <div class="gallery-content"><p>Foto de los estudiantes en el huerto escolar</p></div>
+            </div>
+            <div class="gallery-item item-small">
+                <img src="assets/IMG_20251020_094514.webp" alt="Competencia" loading="lazy">
+                <div class="gallery-content"><p>Chequeos de emulación del centro - competencia de correr</p></div>
+            </div>
+            <div class="gallery-item item-small">
+                <img src="assets/IMG-20260201-WA0007.webp" alt="Cosecha huerto" loading="lazy">
+                <div class="gallery-content"><p>Foto de nuestra cosecha en el huerto escolar</p></div>
+            </div>
+        </div>
+
+        <div class="gallery-row">
+            <div class="gallery-item item-large">
+                <img src="assets/IMG-20260201-WA0006.webp" alt="Cosecha huerto 2" loading="lazy">
+                <div class="gallery-content"><p>Otra imagen de la cosecha del huerto</p></div>
+            </div>
+            <div class="gallery-item item-small">
+                <img src="assets/IMG-20260201-WA0010.webp" alt="Graduados 2025" loading="lazy">
+                <div class="gallery-content"><p>Foto de estudiantes graduados en este año 2025</p></div>
+            </div>
+        </div>
+
+        <div class="gallery-row">
+            <div class="gallery-item item-half">
+                <img src="assets/IMG-20260201-WA0009.webp" alt="Día del maestro" loading="lazy">
+                <div class="gallery-content"><p>Foto de todo el personal de la escuela más estudiantes en el día del maestro</p></div>
+            </div>
+            <div class="gallery-item item-half">
+                <img src="assets/IMG-20260201-WA0052.webp" alt="Embellecimiento" loading="lazy">
+                <div class="gallery-content"><p>Embellecimiento de nuestro centro</p></div>
+            </div>
+        </div>
+
+        <div class="gallery-row">
+            <div class="gallery-item item-small">
+                <img src="assets/IMG-20260201-WA0040.webp" alt="Sembrando huerto" loading="lazy">
+                <div class="gallery-content"><p>Nuestros estudiantes sembrando en el huerto escolar</p></div>
+            </div>
+            <div class="gallery-item item-small">
+                <img src="assets/IMG-20260201-WA0058.webp" alt="Actividad Venezuela" loading="lazy">
+                <div class="gallery-content"><p>Actividad en la escuela por lo sucedido en Venezuela</p></div>
+            </div>
+            <div class="gallery-item item-small">
+                <img src="assets/IMG-20260201-WA0055.webp" alt="Actividad Venezuela 2" loading="lazy">
+                <div class="gallery-content"><p>Otra foto de la actividad por lo sucedido en Venezuela</p></div>
+            </div>
+        </div>
+
+        <div class="gallery-row">
+            <div class="gallery-item item-medium">
+                <img src="assets/IMG-20260201-WA0061.webp" alt="Estudiantes y profesores" loading="lazy">
+                <div class="gallery-content"><p>Estudiantes y profesores en la actividad por lo sucedido en Venezuela</p></div>
+            </div>
+            <div class="gallery-item item-medium">
+                <img src="assets/IMG-20260201-WA0057.webp" alt="Firma apoyo Venezuela" loading="lazy">
+                <div class="gallery-content"><p>Los estudiantes firmando para dar nuestro apoyo a Venezuela</p></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 IP República Bolivariana de Venezuela. Todos los derechos reservados.</p>
+                <p>Sitio web creado por Jaison M. Herrera Romero, estudiante del centro.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="javascript/main.js"></script>
+</body>
+</html>
