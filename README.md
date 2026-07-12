@@ -1,6 +1,6 @@
 # IP República Bolivariana de Venezuela - Sitio Web Oficial
 
-Sitio web moderno y responsivo para el Instituto Politécnico República Bolivariana de Venezuela, desarrollado con tecnologías web estándar.
+Sitio web moderno, responsivo y PWA para el Instituto Politécnico República Bolivariana de Venezuela.
 
 **URL**: https://republica-bolivariana-de-venezuela.netlify.app/
 
@@ -13,16 +13,19 @@ Sitio web moderno y responsivo para el Instituto Politécnico República Bolivar
 
 ## Características
 
-- Diseño responsive con modo oscuro
+- PWA instalable (funciona offline)
 - Chatbot interactivo con respuestas contextuales
-- Galería de fotos del centro
-- Navegación unificada en todas las páginas
+- Galería de fotos con lightbox
+- Blog/Noticias del centro
+- Formulario de contacto real (Netlify Forms)
 - Bilingüe (Español/Inglés)
+- Modo oscuro/claro
 - Icons SVG inline (sin dependencias externas)
 - Structured Data (JSON-LD) para SEO
 - Meta tags Open Graph y Twitter Cards
 - Headers de seguridad (CSP, X-Frame-Options)
-- Caché optimizado en Netlify
+- Print stylesheet optimizado
+- Accesibilidad (skip-link, focus-visible, reduced-motion, high-contrast)
 
 ## Estructura del Proyecto
 
@@ -34,11 +37,15 @@ web/
 ├── pagina-informatica.html # Especialidad de Informática
 ├── pagina-electronica.html # Especialidad de Electrónica
 ├── pagina-automatica.html  # Especialidad de Automática
-├── gallery.html            # Galería de fotos
-├── contacto.html           # Página de contacto
-├── styles.css              # Estilos principales (~2000 líneas)
+├── gallery.html            # Galería de fotos con lightbox
+├── noticias.html           # Blog/Noticias del centro
+├── contacto.html           # Contacto con Netlify Forms
+├── styles.css              # Estilos principales
 ├── icons.svg               # Sprite SVG (17 iconos)
+├── sw.js                   # Service Worker (PWA + offline)
+├── site.webmanifest        # Manifest PWA
 ├── netlify.toml            # Configuración Netlify + headers
+├── build.sh                # Script de build/minify
 ├── sitemap.xml             # Mapa del sitio para SEO
 ├── robots.txt              # Instrucciones para bots
 ├── assets/                 # Imágenes WebP optimizadas
@@ -47,27 +54,35 @@ web/
     └── chatbot.js          # Chatbot interactivo
 ```
 
-## Tecnologías
+## PWA (Progressive Web App)
 
-- HTML5 semántico
-- CSS3 con variables CSS
-- JavaScript ES6+ vanilla (vanilla JS, sin frameworks)
-- SVG inline para iconos (sin dependencias)
-- Google Fonts (Playfair Display + Inter)
-- Netlify (hosting + CDN + headers de seguridad)
+El sitio es instalable como应用 en dispositivos móviles:
+- Funciona offline gracias al Service Worker
+- Caché inteligente de páginas y recursos
+- Iconos responsive (192px, 512px)
+- Manifest completo para instalación
+
+## Formulario de Contacto
+
+El formulario usa **Netlify Forms** (gratis):
+- Los mensajes se envían por email al administrador
+- Protección contra spam con honeypot
+- Sin necesidad de backend propio
+
+Para ver los mensajes: Netlify Dashboard > Forms
 
 ## Optimizaciones de Rendimiento
 
-1. **Iconos SVG inline** — eliminada dependencia de Font Awesome (~80KB → ~2KB)
-2. **Google Fonts diferido** — carga no bloqueante con `media="print" onload`
-3. **Scripts defer** — carga no bloqueante de JavaScript
-4. **Imágenes WebP** — formato moderno con mejor compresión
-5. **Lazy loading** — imágenes con `loading="lazy"` y `decoding="async"`
-6. **Preload hero** — imagen principal precargada
-7. **fetchpriority** — logo con prioridad alta
-8. **Caché Netlify** — headers optimizados por tipo de archivo
-9. **CSS deduplicado** — reglas CSS duplicadas eliminadas
-10. **contain** — rendimiento optimizado en chat widget
+1. **Iconos SVG inline** — ~80KB → ~2KB (eliminada dependencia Font Awesome)
+2. **Service Worker** — caché offline de todo el sitio
+3. **Google Fonts diferido** — carga no bloqueante
+4. **Scripts defer** — JavaScript no bloqueante
+5. **Imágenes WebP** — mejor compresión que JPEG/PNG
+6. **Lazy loading** — imágenes con `loading="lazy"`
+7. **Preload hero** — imagen principal precargada
+8. **fetchpriority** — logo con prioridad alta
+9. **Caché Netlify** — headers optimizados por tipo
+10. **CSS deduplicado** — reglas duplicadas eliminadas
 
 ## Seguridad
 
@@ -88,25 +103,23 @@ web/
 - Sitemap XML actualizado
 - robots.txt
 
+## Build y Despliegue
+
+```bash
+# Build (minifica CSS/JS)
+./build.sh
+
+# Despliegue automático
+git add -A
+git commit -m "descripción"
+git push
+```
+
 ## Desarrollo Local
 
 ```bash
-# Abrir directamente en el navegador
-open index.html
-
-# O usar un servidor local
 python -m http.server 8000
 # Abrir http://localhost:8000
-```
-
-## Despliegue
-
-El sitio se despliega automáticamente en Netlify al hacer push a la rama `main`.
-
-```bash
-git add -A
-git commit -m "描述 de los cambios"
-git push
 ```
 
 ## Contacto
@@ -118,4 +131,4 @@ git push
 
 ---
 **Última actualización**: Julio 2026
-**Versión**: 3.0.0
+**Versión**: 4.0.0

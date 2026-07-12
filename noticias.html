@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias - IP República Bolivariana de Venezuela</title>
+    <link rel="icon" href="assets/icon-512.webp" type="image/webp">
+    <link rel="apple-touch-icon" href="assets/icon-512.webp">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="description" content="Noticias y novedades del IP República Bolivariana de Venezuela. Eventos, graduaciones, actividades del centro.">
+    <meta property="og:title" content="Noticias - IP República Bolivariana de Venezuela">
+    <meta property="og:description" content="Noticias y novedades del centro educativo.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://republica-bolivariana-de-venezuela.netlify.app/noticias.html">
+    <meta property="og:image" content="https://republica-bolivariana-de-venezuela.netlify.app/assets/icon-512.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://republica-bolivariana-de-venezuela.netlify.app/noticias.html">
+    <link rel="alternate" hreflang="es" href="https://republica-bolivariana-de-venezuela.netlify.app/noticias.html">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .news-page { padding: 120px 0 60px; }
+        .news-page h1 { text-align: center; color: var(--primary); font-size: 2.5rem; margin-bottom: 10px; }
+        .news-page .subtitle { text-align: center; color: var(--gray); margin-bottom: 40px; font-size: 1.1rem; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .news-card { background: var(--light); border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s; }
+        .news-card:hover { transform: translateY(-8px); }
+        .news-card img { width: 100%; height: 220px; object-fit: cover; }
+        .news-card-body { padding: 25px; }
+        .news-date { color: var(--gray); font-size: 0.85rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .news-card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.2rem; }
+        .news-card p { color: var(--gray); font-size: 0.95rem; line-height: 1.6; }
+        .news-tag { display: inline-block; background: rgba(10,36,99,0.08); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-top: 12px; }
+        .news-empty { text-align: center; padding: 60px 20px; color: var(--gray); font-size: 1.1rem; grid-column: 1 / -1; }
+    </style>
+</head>
+<body>
+    <div class="preloader" id="preloader" aria-hidden="true"><div class="preloader-spinner"></div></div>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="assets/icon-512.webp" alt="Logo" width="50" height="50" loading="eager" decoding="async">
+                <div class="logo-text">
+                    <div class="logo-title">IP República Bolivariana de Venezuela</div>
+                    <div class="logo-subtitle">Formando técnicos para el futuro</div>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="noticias.html" class="nav-link active">Noticias</a></li>
+                    <li><a href="gallery.html" class="nav-link">Galería</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                    <li><a href="en/" class="nav-link" style="font-size:0.8rem;opacity:0.7;">EN</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar modo oscuro/claro">🌙</button>
+                <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+    <section class="news-page">
+        <div class="container">
+            <h1>Noticias del Centro</h1>
+            <p class="subtitle">Mantente al día con las actividades y logros de nuestra comunidad educativa</p>
+
+            <div class="news-grid">
+                <article class="news-card">
+                    <img src="assets/IMG-20260201-WA0052.webp" alt="Embellecimiento del centro" loading="lazy" decoding="async">
+                    <div class="news-card-body">
+                        <div class="news-date">
+                            <svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>
+                            1 Febrero 2026
+                        </div>
+                        <h3>Jornada de Embellecimiento del Centro</h3>
+                        <p>Estudiantes y profesores participaron en una jornada de embellecimiento para mejorar las instalaciones del centro educativo.</p>
+                        <span class="news-tag">Actividades</span>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <img src="assets/IMG-20260201-WA0058.webp" alt="Actividad solidaria" loading="lazy" decoding="async">
+                    <div class="news-card-body">
+                        <div class="news-date">
+                            <svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>
+                            1 Febrero 2026
+                        </div>
+                        <h3>Actividad Solidaria con Venezuela</h3>
+                        <p>Nuestra comunidad escolar se unió en una actividad de solidaridad con el pueblo venezolano, demostrando los valores de internacionalismo.</p>
+                        <span class="news-tag">Solidaridad</span>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <img src="assets/IMG-20260201-WA0010.webp" alt="Graduación 2025" loading="lazy" decoding="async">
+                    <div class="news-card-body">
+                        <div class="news-date">
+                            <svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>
+                            20 Diciembre 2025
+                        </div>
+                        <h3>Graduación de la Promoción 2025</h3>
+                        <p>Con orgullo celebramos la graduación de nuestros técnicos medios en Informática, Electrónica y Automática. ¡Felicitaciones a todos los graduados!</p>
+                        <span class="news-tag">Graduación</span>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <img src="assets/IMG_20251017_093353.webp" alt="Huerto escolar" loading="lazy" decoding="async">
+                    <div class="news-card-body">
+                        <div class="news-date">
+                            <svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>
+                            17 Octubre 2025
+                        </div>
+                        <h3>Cosecha del Huerto Escolar</h3>
+                        <p>Los estudiantes del huerto escolar cosecharon verduras frescas como parte del programa de educación ambiental y productiva del centro.</p>
+                        <span class="news-tag">Producción</span>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <img src="assets/imagenes del centro (14).webp" alt="Inicio del curso" loading="lazy" decoding="async">
+                    <div class="news-card-body">
+                        <div class="news-date">
+                            <svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>
+                            1 Septiembre 2025
+                        </div>
+                        <h3>Inicio del Curso Escolar 2025-2026</h3>
+                        <p>Damos la bienvenida a los nuevos estudiantes que se incorporan a nuestras tres especialidades técnicas. ¡Éxitos en este nuevo curso!</p>
+                        <span class="news-tag">Inicio de curso</span>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <img src="assets/imagenes del centro (3).webp" alt="Graduación 2024" loading="lazy" decoding="async">
+                    <div class="news-card-body">
+                        <div class="news-date">
+                            <svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>
+                            15 Julio 2025
+                        </div>
+                        <h3>Acto de Graduación 2024</h3>
+                        <p>Celebramos el acto de graduación de la promoción 2024 con la presencia de familias, profesores y autoridades del municipio.</p>
+                        <span class="news-tag">Graduación</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 IP República Bolivariana de Venezuela. Todos los derechos reservados.</p>
+                <p>Sitio web creado por Jaison M. Herrera Romero, estudiante del centro.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="javascript/main.js" defer></script>
+    <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}</script>
+</body>
+</html>

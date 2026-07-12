@@ -863,6 +863,11 @@ body.dark-mode .responsive-table tr:hover {
     transform: translateY(0);
 }
 
+.gallery-content { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); color: white; padding: 20px 15px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.gallery-content p { margin: 0; font-size: 0.9rem; line-height: 1.4; }
+.gallery-item:hover .gallery-content { opacity: 1; }
+.gallery-item { cursor: pointer; }
+
 /* ---------- CONTACT ---------- */
 .contact-container {
     display: grid;
@@ -1884,38 +1889,38 @@ body.dark-mode .contact-form-container {
 
 /* ---------- PRINT STYLES ---------- */
 @media print {
-    .back-to-top,
-    .chat-widget,
-    .chat-open-button,
-    .theme-toggle {
-        display: none !important;
-    }
+    .back-to-top, .chat-widget, .chat-open-button, .theme-toggle,
+    .hamburger, .whatsapp-float, .preloader, .particles, .dropdown,
+    .header-actions, nav { display: none !important; }
 
-    body {
-        font-size: 12pt;
-        line-height: 1.4;
-    }
-
-    h1, h2, h3, h4 {
-        page-break-after: avoid;
-    }
-
-    table {
-        page-break-inside: avoid;
-    }
-
-    .gallery-grid,
-    .gallery-container {
-        display: none;
-    }
-
-    footer {
-        position: static;
-        margin-top: 40px;
-        border-top: 1px solid #ccc;
-        padding-top: 20px;
-    }
+    body { font-size: 12pt; line-height: 1.5; color: #000; background: #fff; }
+    header { position: static; box-shadow: none; background: none; border-bottom: 2px solid #000; }
+    .logo-title { color: #000; }
+    .hero { background: none !important; color: #000; padding: 20px 0; min-height: auto; }
+    .hero-title, .hero-subtitle { color: #000; text-shadow: none; }
+    .hero-title { font-size: 2rem; }
+    .stat-number { color: #000; text-shadow: none; }
+    h1, h2, h3, h4 { page-break-after: avoid; color: #000; }
+    a { color: #000; text-decoration: underline; }
+    a[href]:after { content: " (" attr(href) ")"; font-size: 0.8rem; }
+    table { page-break-inside: avoid; border: 1px solid #ccc; }
+    th, td { border: 1px solid #ccc; padding: 6px 10px; }
+    th { background: #eee; }
+    img { max-width: 100% !important; }
+    .gallery-grid, .gallery-container, .specialties-grid, .about-features { display: none; }
+    footer { position: static; margin-top: 20px; border-top: 1px solid #ccc; padding-top: 15px; }
+    .footer-bottom { color: #333; }
 }
+
+/* ---------- HIGH CONTRAST MODE ---------- */
+@media (prefers-contrast: high) {
+    :root { --shadow: 0 0 0 2px #000; }
+    .btn { border: 2px solid currentColor; }
+    .nav-link { border-bottom: 2px solid transparent; }
+    .nav-link:hover, .nav-link.active { border-bottom-color: currentColor; }
+}
+
+/* ---------- PRINT STYLES ---------- */
 
 /* ---------- RESPONSIVE OVERRIDES FOR SPECIALTY PAGES ---------- */
 @media (max-width: 992px) {

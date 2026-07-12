@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galería de Fotos - IP República Bolivariana de Venezuela</title>
     <link rel="icon" href="assets/icon-512.webp" type="image/webp">
+    <link rel="apple-touch-icon" href="assets/icon-512.webp">
+    <link rel="manifest" href="site.webmanifest">
     <meta name="description" content="Galería de fotos del IP República Bolivariana de Venezuela. Imágenes de actividades, instalaciones, graduaciones y eventos del centro.">
     <meta property="og:title" content="Galería de Fotos - IP República Bolivariana de Venezuela">
     <meta property="og:description" content="Imágenes de actividades, instalaciones y eventos del centro educativo.">
@@ -57,6 +59,7 @@
                     <li><a href="pagina-electronica.html" class="nav-link">Electrónica</a></li>
                     <li><a href="pagina-automatica.html" class="nav-link">Automática</a></li>
                     <li><a href="gallery.html" class="nav-link active">Galería</a></li>
+                    <li><a href="noticias.html" class="nav-link">Noticias</a></li>
                     <li><a href="contacto.html" class="nav-link">Contacto</a></li>
                 </ul>
             </nav>
@@ -183,6 +186,7 @@
         </div>
     </footer>
 
-    <script src="javascript/main.js"></script>
+    <script src="javascript/main.js" defer></script>
+    <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}</script>
 </body>
 </html>

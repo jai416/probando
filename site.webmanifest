@@ -1,0 +1,27 @@
+{
+    "name": "IP República Bolivariana de Venezuela",
+    "short_name": "IP-RBV",
+    "description": "Sitio web oficial del Instituto Politécnico República Bolivariana de Venezuela",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a2463",
+    "theme_color": "#0a2463",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "assets/icon-512.webp",
+            "sizes": "512x512",
+            "type": "image/webp",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/icon-192.webp",
+            "sizes": "192x192",
+            "type": "image/webp",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["education"],
+    "lang": "es",
+    "dir": "ltr"
+}

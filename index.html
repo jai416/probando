@@ -20,6 +20,8 @@
     <link rel="alternate" hreflang="es" href="https://republica-bolivariana-de-venezuela.netlify.app/">
     <link rel="alternate" hreflang="en" href="https://republica-bolivariana-de-venezuela.netlify.app/en/">
     <link rel="icon" href="assets/icon-512.webp" type="image/webp">
+    <link rel="apple-touch-icon" href="assets/icon-512.webp">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="preload" href="assets/imagenes del centro (1).webp" as="image">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="styles.css">
@@ -74,6 +76,7 @@
                     <li><a href="#especialidades" class="nav-link">Especialidades</a></li>
                     <li><a href="#infraestructura" class="nav-link">Instalaciones</a></li>
                     <li><a href="gallery.html" class="nav-link">Galería</a></li>
+                    <li><a href="noticias.html" class="nav-link">Noticias</a></li>
                     <li><a href="#contacto" class="nav-link">Contacto</a></li>
                     <li><a href="en/" class="nav-link" style="font-size:0.8rem;opacity:0.7;">EN</a></li>
                 </ul>
@@ -395,5 +398,10 @@
 
     <script src="javascript/main.js" defer></script>
     <script src="javascript/chatbot.js" defer></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(function(){});
+    }
+    </script>
 </body>
 </html>
