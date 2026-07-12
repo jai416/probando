@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,134 +10,38 @@
     <meta property="og:description" content="Teléfono, ubicación y horario del centro educativo.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://republica-bolivariana-de-venezuela.netlify.app/contacto.html">
+    <meta property="og:image" content="https://republica-bolivariana-de-venezuela.netlify.app/assets/icon-512.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contacto - IP República Bolivariana de Venezuela">
     <link rel="canonical" href="https://republica-bolivariana-de-venezuela.netlify.app/contacto.html">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="alternate" hreflang="es" href="https://republica-bolivariana-de-venezuela.netlify.app/contacto.html">
+    <link rel="alternate" hreflang="en" href="https://republica-bolivariana-de-venezuela.netlify.app/en/">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .contact-page-header {
-            background: linear-gradient(135deg, #0a2463, #061a42);
-            color: white;
-            padding: 120px 0 60px;
-            text-align: center;
-        }
-
-        .contact-info-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-            margin-bottom: 20px;
-        }
-
-        .contact-info-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .contact-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #0a2463, #1e3a8a);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: white;
-            font-size: 1.8rem;
-        }
-
-        .contact-form-container {
-            background: #f2f3f6;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #0a2463;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #0a2463;
-        }
-
-        .admission-btn {
-            background: linear-gradient(135deg, #0a2463, #061a42);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .admission-btn:hover {
-            transform: translateY(-3px);
-        }
-
-        .hero-subtitle {
-            color: white;
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-top: 15px;
-        }
-
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        @media (max-width: 768px) {
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-        }
+        .contact-page-header { background: linear-gradient(135deg, #0a2463, #061a42); color: white; padding: 120px 0 60px; text-align: center; }
+        .contact-info-card { background: white; border-radius: 12px; padding: 30px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.3s; margin-bottom: 20px; }
+        .contact-info-card:hover { transform: translateY(-5px); }
+        .contact-icon { width: 70px; height: 70px; background: linear-gradient(135deg, #0a2463, #1e3a8a); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: white; font-size: 1.8rem; }
+        .contact-form-container { background: #f2f3f6; border-radius: 12px; padding: 40px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #0a2463; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #0a2463; }
+        .admission-btn { background: linear-gradient(135deg, #0a2463, #061a42); color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+        .admission-btn:hover { transform: translateY(-3px); }
+        .hero-subtitle { color: white; font-size: 1.2rem; opacity: 0.9; margin-top: 15px; }
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
+        .contact-info { display: flex; flex-direction: column; }
+        @media (max-width: 768px) { .contact-container { grid-template-columns: 1fr; } }
     </style>
 </head>
-
 <body>
-    <div class="preloader" id="preloader" aria-hidden="true">
-        <div class="preloader-spinner"></div>
-    </div>
+    <div class="preloader" id="preloader" aria-hidden="true"><div class="preloader-spinner"></div></div>
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="assets/icon-512.webp" alt="Logo" width="50" height="50">
+                <img src="assets/icon-512.webp" alt="Logo" width="50" height="50" loading="eager" decoding="async">
                 <div class="logo-text">
                     <div class="logo-title">IP República Bolivariana de Venezuela</div>
                     <div class="logo-subtitle">Formando técnicos para el futuro</div>
@@ -152,13 +55,12 @@
                     <li><a href="pagina-automatica.html" class="nav-link">Automática</a></li>
                     <li><a href="gallery.html" class="nav-link">Galería</a></li>
                     <li><a href="contacto.html" class="nav-link active">Contacto</a></li>
+                    <li><a href="en/" class="nav-link" style="font-size:0.8rem;opacity:0.7;">EN</a></li>
                 </ul>
             </nav>
             <div class="header-actions">
                 <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar modo oscuro/claro">🌙</button>
-                <button class="hamburger" id="hamburger" aria-label="Menú">
-                    <span></span><span></span><span></span>
-                </button>
+                <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
             </div>
         </div>
     </header>
@@ -176,24 +78,24 @@
             <div class="contact-container">
                 <div class="contact-info">
                     <div class="contact-info-card">
-                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-icon"><svg class="icon"><use href="icons.svg#map-marker-alt"/></svg></div>
                         <h3>Ubicación</h3>
                         <p>Consejo popular No. 3<br>Calle Km 3 1/2, Río Seco<br>Güines, Mayabeque, Cuba</p>
                     </div>
                     <div class="contact-info-card">
-                        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="contact-icon"><svg class="icon"><use href="icons.svg#phone-alt"/></svg></div>
                         <h3>Teléfono</h3>
                         <p>#47526422</p>
                     </div>
                     <div class="contact-info-card">
-                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-icon"><svg class="icon"><use href="icons.svg#clock"/></svg></div>
                         <h3>Horario</h3>
                         <p>Lunes a Viernes<br>8:00 AM - 4:00 PM</p>
                     </div>
                 </div>
                 
                 <div class="contact-form-container">
-                    <h2 style="color: #0a2463; margin-bottom: 30px;">Formulario de Contacto</h2>
+                    <h2 style="color:#0a2463;margin-bottom:30px;">Formulario de Contacto</h2>
                     <form id="contact-form">
                         <div class="form-group">
                             <label for="name">Nombre Completo</label>
@@ -217,7 +119,7 @@
                             <textarea id="message" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="admission-btn">
-                            <i class="fas fa-paper-plane"></i>
+                            <svg class="icon"><use href="icons.svg#paper-plane"/></svg>
                             Enviar Mensaje
                         </button>
                     </form>
@@ -235,9 +137,9 @@
         </div>
     </footer>
 
-    <script src="javascript/main.js"></script>
+    <script src="javascript/main.js" defer></script>
     <script>
-        document.getElementById('contact-form')?.addEventListener('submit', function (e) {
+        document.getElementById('contact-form')?.addEventListener('submit', function(e) {
             e.preventDefault();
             alert('¡Mensaje enviado! Te contactaremos pronto.');
             this.reset();

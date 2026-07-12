@@ -11,12 +11,43 @@
     <meta property="og:description" content="Centro educativo técnico en Güines, Mayabeque. 80 estudiantes en 3 especialidades.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://republica-bolivariana-de-venezuela.netlify.app/">
+    <meta property="og:image" content="https://republica-bolivariana-de-venezuela.netlify.app/assets/icon-512.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IP República Bolivariana de Venezuela">
+    <meta name="twitter:description" content="Centro educativo técnico en Güines, Mayabeque. 80 estudiantes en 3 especialidades.">
+    <meta name="twitter:image" content="https://republica-bolivariana-de-venezuela.netlify.app/assets/icon-512.webp">
     <link rel="canonical" href="https://republica-bolivariana-de-venezuela.netlify.app/">
+    <link rel="alternate" hreflang="es" href="https://republica-bolivariana-de-venezuela.netlify.app/">
+    <link rel="alternate" hreflang="en" href="https://republica-bolivariana-de-venezuela.netlify.app/en/">
     <link rel="icon" href="assets/icon-512.webp" type="image/webp">
     <link rel="preload" href="assets/imagenes del centro (1).webp" as="image">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "IP República Bolivariana de Venezuela",
+        "description": "Centro educativo técnico en Güines, Mayabeque. Formación en Informática, Electrónica y Automática.",
+        "url": "https://republica-bolivariana-de-venezuela.netlify.app/",
+        "logo": "https://republica-bolivariana-de-venezuela.netlify.app/assets/icon-512.webp",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Calle Km 3 1/2, Río Seco",
+            "addressLocality": "Güines",
+            "addressRegion": "Mayabeque",
+            "addressCountry": "CU"
+        },
+        "telephone": "+5347526422",
+        "openingHours": "Mo-Fr 08:00-16:00",
+        "areaServed": "Güines, Mayabeque",
+        "numberOfEmployees": "30",
+        "founder": {
+            "@type": "Person",
+            "name": "Jaison M. Herrera Romero"
+        }
+    }
+    </script>
 </head>
 <body>
     <div class="preloader" id="preloader" aria-hidden="true">
@@ -44,10 +75,11 @@
                     <li><a href="#infraestructura" class="nav-link">Instalaciones</a></li>
                     <li><a href="gallery.html" class="nav-link">Galería</a></li>
                     <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                    <li><a href="en/" class="nav-link" style="font-size:0.8rem;opacity:0.7;">EN</a></li>
                 </ul>
             </nav>
             <nav class="dropdown" aria-label="Especialidades">
-                <button class="dropdown-trigger" aria-expanded="false" aria-haspopup="true">Especialidades <i class="fas fa-chevron-down" style="font-size:0.7rem;margin-left:4px;"></i></button>
+                <button class="dropdown-trigger" aria-expanded="false" aria-haspopup="true">Especialidades <svg class="icon icon-sm" style="font-size:0.7rem;margin-left:4px;"><use href="icons.svg#chevron-down"/></svg></button>
                 <ul class="dropdown-menu">
                     <li><a href="pagina-automatica.html">Automática</a></li>
                     <li><a href="pagina-informatica.html">Informática</a></li>
@@ -67,8 +99,6 @@
         </div>
     </header>
 
-    <a href="#inicio" class="sr-only" style="position:absolute;top:0;left:0;background:var(--primary);color:white;padding:10px;z-index:10000;">Saltar al contenido principal</a>
-
     <main id="main-content">
     <section class="hero" id="inicio">
         <div class="particles" id="particles"></div>
@@ -77,11 +107,11 @@
             <p class="hero-subtitle">Instituto Politécnico República Bolivariana de Venezuela - Centro educativo líder en formación técnica en Güines, Mayabeque</p>
             <div class="hero-actions">
                 <a href="#especialidades" class="btn btn-primary">
-                    <i class="fas fa-graduation-cap"></i>
+                    <svg class="icon"><use href="icons.svg#graduation-cap"/></svg>
                     Ver Especialidades
                 </a>
                 <a href="#contacto" class="btn btn-secondary">
-                    <i class="fas fa-phone-alt"></i>
+                    <svg class="icon"><use href="icons.svg#phone-alt"/></svg>
                     Contáctanos
                 </a>
             </div>
@@ -119,7 +149,7 @@
             <div class="about-features">
                 <div class="feature-item">
                     <div class="feature-icon">
-                        <i class="fas fa-graduation-cap"></i>
+                        <svg class="icon"><use href="icons.svg#graduation-cap"/></svg>
                     </div>
                     <div>
                         <h3>Formación Integral</h3>
@@ -128,7 +158,7 @@
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">
-                        <i class="fas fa-tools"></i>
+                        <svg class="icon"><use href="icons.svg#tools"/></svg>
                     </div>
                     <div>
                         <h3>Enfoque Práctico</h3>
@@ -137,7 +167,7 @@
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">
-                        <i class="fas fa-handshake"></i>
+                        <svg class="icon"><use href="icons.svg#handshake"/></svg>
                     </div>
                     <div>
                         <h3>Vinculación Laboral</h3>
@@ -146,7 +176,7 @@
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
+                        <svg class="icon"><use href="icons.svg#rocket"/></svg>
                     </div>
                     <div>
                         <h3>Innovación Continua</h3>
@@ -212,7 +242,7 @@
             <div class="specialties-grid">
                 <div class="specialty-card">
                     <div class="specialty-icon">
-                        <i class="fas fa-laptop-code"></i>
+                        <svg class="icon"><use href="icons.svg#laptop-code"/></svg>
                     </div>
                     <h3 class="specialty-name">Informática</h3>
                     <div class="specialty-count">59 Estudiantes</div>
@@ -221,7 +251,7 @@
                 
                 <div class="specialty-card">
                     <div class="specialty-icon">
-                        <i class="fas fa-microchip"></i>
+                        <svg class="icon"><use href="icons.svg#microchip"/></svg>
                     </div>
                     <h3 class="specialty-name">Electrónica</h3>
                     <div class="specialty-count">14 Estudiantes</div>
@@ -230,7 +260,7 @@
                 
                 <div class="specialty-card">
                     <div class="specialty-icon">
-                        <i class="fas fa-robot"></i>
+                        <svg class="icon"><use href="icons.svg#robot"/></svg>
                     </div>
                     <h3 class="specialty-name">Automática</h3>
                     <div class="specialty-count">7 Estudiantes</div>
@@ -262,7 +292,7 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
+                            <svg class="icon"><use href="icons.svg#map-marker-alt"/></svg>
                         </div>
                         <div class="contact-details">
                             <h3>Ubicación</h3>
@@ -274,7 +304,7 @@
                     
                     <div class="contact-item">
                         <div class="contact-icon">
-                            <i class="fas fa-phone-alt"></i>
+                            <svg class="icon"><use href="icons.svg#phone-alt"/></svg>
                         </div>
                         <div class="contact-details">
                             <h3>Teléfono</h3>
@@ -284,7 +314,7 @@
                     
                     <div class="contact-item">
                         <div class="contact-icon">
-                            <i class="fas fa-clock"></i>
+                            <svg class="icon"><use href="icons.svg#clock"/></svg>
                         </div>
                         <div class="contact-details">
                             <h3>Horario de Atención</h3>
@@ -319,9 +349,9 @@
                 <div class="footer-col">
                     <h3>Contacto</h3>
                     <ul class="footer-links">
-                        <li>📍 Güines, Mayabeque, Cuba</li>
-                        <li>📞 #47526422</li>
-                        <li>🕒 Lunes a Viernes: 8:00 AM - 4:00 PM</li>
+                        <li>Güines, Mayabeque, Cuba</li>
+                        <li>#47526422</li>
+                        <li>Lunes a Viernes: 8:00 AM - 4:00 PM</li>
                     </ul>
                 </div>
             </div>
@@ -334,7 +364,7 @@
     </footer>
 
     <button class="chat-open-button" id="chat-open-btn" aria-label="Abrir chat">
-        <i class="fas fa-comments"></i>
+        <svg class="icon"><use href="icons.svg#comments"/></svg>
     </button>
 
     <div class="chat-widget hidden" id="chat-widget">
@@ -360,10 +390,10 @@
     </div>
 
     <button class="back-to-top" id="back-to-top" aria-label="Volver al inicio">
-        <i class="fas fa-chevron-up"></i>
+        <svg class="icon"><use href="icons.svg#chevron-up"/></svg>
     </button>
 
-    <script src="javascript/main.js"></script>
-    <script src="javascript/chatbot.js"></script>
+    <script src="javascript/main.js" defer></script>
+    <script src="javascript/chatbot.js" defer></script>
 </body>
 </html>

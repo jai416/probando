@@ -84,6 +84,13 @@ h1, h2, h3, h4, h5, h6 {
     to { transform: rotate(360deg); }
 }
 
+/* ---------- SVG ICONS ---------- */
+.icon { width: 1em; height: 1em; fill: currentColor; vertical-align: -0.125em; display: inline-block; }
+.icon-sm { width: 0.7em; height: 0.7em; }
+.feature-icon .icon, .specialty-icon .icon, .contact-icon .icon { width: 1.2em; height: 1.2em; }
+.chat-open-button .icon { width: 1.4em; height: 1.4em; }
+.back-to-top .icon { width: 1em; height: 1em; }
+
 /* ---------- UTILIDADES ---------- */
 .container {
     width: 100%;
@@ -1863,38 +1870,6 @@ body.dark-mode .contact-form-container {
 @keyframes zoomIn {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
-}
-
-/* ---------- RESPONSIVE TABLES ---------- */
-.table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-top: 20px;
-}
-
-.responsive-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 600px;
-}
-
-.responsive-table th,
-.responsive-table td {
-    border: 1px solid var(--gray-light);
-    padding: 8px;
-    text-align: left;
-}
-
-.responsive-table thead th {
-    font-weight: bold;
-}
-
-.responsive-table tbody tr:nth-child(even) {
-    background: rgba(10, 36, 99, 0.05);
-}
-
-body.dark-mode .responsive-table tbody tr:nth-child(even) {
-    background: rgba(212, 175, 55, 0.05);
 }
 
 /* ---------- WHATSAPP ICON ---------- */
