@@ -8,7 +8,6 @@ const ASSETS = [
     '/icons.svg',
     '/assets/icon-512.webp',
     '/gallery.html',
-    '/contacto.html',
     '/noticias.html',
     '/pagina-informatica.html',
     '/pagina-electronica.html',
