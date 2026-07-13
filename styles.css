@@ -1234,14 +1234,16 @@ body.dark-mode .chat-widget {
 .chat-close-button { background: transparent; border: none; color: inherit; font-size: 20px; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
 .chat-close-button:focus { outline: 3px solid rgba(255,255,255,0.18); }
 
-.chat-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
-.chat-messages { display: flex; flex-direction: column; gap: 12px; overflow: auto; padding-right: 6px; max-height: calc(72vh - 170px); }
+.chat-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; min-height: 0; }
+.chat-messages { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; overflow-x: hidden; padding-right: 6px; max-height: calc(72vh - 170px); -webkit-overflow-scrolling: touch; }
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
 
 .message { display: flex; gap: 10px; align-items: flex-start; max-width: 100%; min-width: 0; }
-.bot-message { align-self: flex-start; }
-.user-message { align-self: flex-end; justify-content: flex-end; }
+.bot-message { align-self: flex-start; max-width: 85%; }
+.user-message { align-self: flex-end; justify-content: flex-end; max-width: 85%; }
 .bot-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; }
-.message > div { background: #fff; color: #111; padding: 10px 12px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04); min-width: 0; max-width: 100%; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; }
+.message > div { background: #fff; color: #111; padding: 10px 12px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04); min-width: 0; max-width: 100%; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; white-space: pre-wrap; }
 body.dark-mode .message > div { background: #2320e0; color: #eee; border-color: rgba(255,255,255,0.03); }
 
 .chat-quick-replies { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }

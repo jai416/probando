@@ -1,210 +1,75 @@
 // =====================================================
 // CHATBOT IP REPÚBLICA BOLIVARIANA DE VENEZUELA
-// Versión 3.0 - Avanzado con NLP mejorado
+// Versión 4.0 - Conocimiento desde Supabase
 // =====================================================
 (function() {
     'use strict';
 
-    // ---------- BASE DE CONOCIMIENTO ----------
-    var KNOWLEDGE = {
-        saludo: {
-            response: "¡Hola! 👋 Bienvenido al IP República Bolivariana de Venezuela.\n\nSoy el asistente virtual del centro. ¿En qué puedo ayudarte hoy?",
-            suggestions: ["Especialidades", "Inscripción", "Contacto", "Infraestructura"]
-        },
-        saludo_tarde: {
-            response: "¡Buenas tardes! 👋 Bienvenido al IP República Bolivariana de Venezuela.\n\n¿En qué puedo ayudarte?",
-            suggestions: ["Especialidades", "Inscripción", "Contacto"]
-        },
-        saludo_noche: {
-            response: "¡Buenas noches! 👋 Bienvenido al IP República Bolivariana de Venezuela.\n\nAunque es tarde, estoy aquí para ayudarte. ¿Qué necesitas?",
-            suggestions: ["Especialidades", "Contacto"]
-        },
-        adios: {
-            response: "¡Hasta luego! 👋\n\nGracias por contactarnos. ¡Que tengas un excelente día!",
-            suggestions: []
-        },
-        gracias: {
-            response: "¡De nada! 😊\n\nEstoy aquí para ayudarte. ¿Tienes alguna otra pregunta?",
-            suggestions: ["Especialidades", "Inscripción", "Contacto"]
-        },
-        si: {
-            response: "¡Genial! 😊 ¿En qué te puedo ayudar?",
-            suggestions: ["Especialidades", "Inscripción", "Infraestructura"]
-        },
-        no: {
-            response: "No hay problema. Si necesitas algo más, aquí estaré. 👋",
-            suggestions: ["Especialidades", "Contacto"]
-        },
+    var KNOWLEDGE = {};
+    var lastKnowledgeUpdate = 0;
+    var CACHE_DURATION = 300000; // 5 minutos
 
-        // ----- ESPECIALIDADES -----
-        especialidades: {
-            response: "📚 **ESPECIALIDADES 2025-2026**\n\n💻 **Informática** - 59 estudiantes (3 grupos)\n⚡ **Electrónica** - 14 estudiantes\n🤖 **Automática** - 7 estudiantes\n\n🎯 Total: 80 estudiantes en 5 grupos\n\n¿Quieres más información sobre alguna?",
-            suggestions: ["Informática", "Electrónica", "Automática"]
-        },
-        informatica: {
-            response: "💻 **ESPECIALIDAD DE INFORMÁTICA**\n\nFormamos técnicos en desarrollo de software, programación y gestión de bases de datos.\n\n👥 **Matrícula**: 59 alumnos (3 grupos)\n📅 **Duración**: 3 años\n🛠️ **Módulos principales**:\n• Programación Web y Apps\n• Redes y Telecomunicaciones\n• POO y Bases de Datos\n• Prácticas de Producción\n\n¿Te interesa inscribirte?",
-            suggestions: ["Inscripción", "Electrónica", "Automática"]
-        },
-        electronica: {
-            response: "⚡ **ESPECIALIDAD DE ELECTRÓNICA**\n\nFormación técnica en diseño de circuitos, sistemas digitales, reparación de equipos y telecomunicaciones.\n\n👥 **Matrícula**: 14 alumnos (1 grupo)\n📅 **Duración**: 3 años\n🛠️ **Módulos principales**:\n• Circuitos Electrónicos\n• Sistemas Digitales\n• Telecomunicaciones\n• Reparación de Equipos\n\n¿Te interesa inscribirte?",
-            suggestions: ["Inscripción", "Informática", "Automática"]
-        },
-        automatica: {
-            response: "🤖 **ESPECIALIDAD DE AUTOMÁTICA**\n\nEnfocada en sistemas de control industrial, automatización de procesos y bases de robótica aplicada.\n\n👥 **Matrícula**: 7 alumnos (1 grupo)\n📅 **Duración**: 3 años\n🛠️ **Módulos principales**:\n• PLC y Programación Industrial\n• Sistemas de Control\n• Robótica Aplicada\n• Neumática e Hidráulica\n\n¿Te interesa inscribirte?",
-            suggestions: ["Inscripción", "Informática", "Electrónica"]
-        },
+    // ---------- CARGAR CONOCIMIENTO DESDE SUPABASE ----------
+    async function loadKnowledge(forceRefresh) {
+        var now = Date.now();
+        if (!forceRefresh && (now - lastKnowledgeUpdate < CACHE_DURATION)) return;
 
-        // ----- INSCRIPCIÓN -----
-        inscripcion: {
-            response: "📝 **REQUISITOS DE INSCRIPCIÓN**\n\n1. Certificado de noveno grado aprobado\n2. Fotos tipo carné (2)\n3. Tarjeta de menor actualizada\n4. Planilla de solicitud completa\n\n📅 **Período de inscripción**: Julio - Septiembre\n📍 **Dirígete a**: Secretaría del centro\n\n¿Necesitas más información?",
-            suggestions: ["Contacto", "Ubicación", "Horario"]
-        },
-        requisitos: {
-            response: "📋 **REQUISITOS**\n\nPara inscribirte necesitas:\n1. ✅ Certificado de noveno grado\n2. 📸 2 fotos tipo carné\n3. 🪪 Tarjeta de menor\n4. 📄 Planilla de solicitud\n\n¿Alguna otra duda?",
-            suggestions: ["Inscripción", "Contacto"]
-        },
-        documentos: {
-            response: "📄 **DOCUMENTOS NECESARIOS**\n\n• Certificado de noveno grado (original y copia)\n• 2 fotos tipo carné recientes\n• Tarjeta de menor actualizada\n• Planilla de solicitud (se entrega en el centro)\n\n¿Necesitas saber dónde entregarlos?",
-            suggestions: ["Contacto", "Ubicación"]
-        },
+        try {
+            var scriptEl = document.querySelector('script[src*="config.js"]');
+            if (!scriptEl) return;
 
-        // ----- CONTACTO Y UBICACIÓN -----
-        contacto: {
-            response: "📞 **INFORMACIÓN DE CONTACTO**\n\n📱 **Teléfono**: #47526422\n🕒 **Horario**: Lunes a Viernes (8:00 AM - 4:00 PM)\n📍 **Email**: info@iprbv.edu.cu\n\n¿Necesitas la ubicación exacta?",
-            suggestions: ["Ubicación", "Horario", "Especialidades"]
-        },
-        ubicacion: {
-            response: "📍 **UBICACIÓN DEL CENTRO**\n\nNos encontramos en:\n\nConsejo popular No. 3\nCircunscripción No. 1\nCalle Km 3 1/2, Río Seco\nGüines, Mayabeque, Cuba\n\n¿Cómo llegar?",
-            suggestions: ["Contacto", "Horario"]
-        },
-        horario: {
-            response: "🕒 **HORARIO ESCOLAR**\n\nEl centro permanece abierto de:\n🌅 Lunes a Viernes: 8:00 AM - 4:00 PM\n\nLas clases técnicas se imparten en sesiones por turnos según el grupo.\n\n¿Algo más?",
-            suggestions: ["Contacto", "Especialidades"]
-        },
-        telefono: {
-            response: "📱 **TELÉFONO**\n\nPuedes llamarnos al: **#47526422**\n\nHorario de atención: Lunes a Viernes de 8:00 AM a 4:00 PM",
-            suggestions: ["Ubicación", "Contacto"]
-        },
+            var config = window.SUPABASE_CONFIG;
+            if (!config) return;
 
-        // ----- INFRAESTRUCTURA -----
-        infraestructura: {
-            response: "🏫 **INFRAESTRUCTURA DEL CENTRO**\n\n**Bloque 1 - Académico:**\n• 13 aulas de clase\n• 2 laboratorios de informática\n• Biblioteca escolar\n• Sala de historia\n• Aula de dibujo\n\n**Bloque 2 - Deportivo y Alimentación:**\n• Canchas de baloncesto y voleibol\n• Área de béisbol\n• Comedor para 150 estudiantes\n• 8 dormitorios (3 habilitados)\n\n¿Quieres saber algo más?",
-            suggestions: ["Especialidades", "Contacto"]
-        },
-        aulas: {
-            response: "🏫 **AULAS**\n\nEl centro cuenta con **13 aulas** distribuidas en el Bloque 1 Académico, junto con 2 laboratorios de informática, biblioteca y sala de dibujo.\n\n¿Alguna otra pregunta?",
-            suggestions: ["Infraestructura", "Especialidades"]
-        },
-        laboratorio: {
-            response: "💻 **LABORATORIOS**\n\nContamos con **2 laboratorios de informática** equipados con:\n• Computadoras actualizadas\n• Acceso a internet\n• Software especializado\n\nLos estudiantes de Informática realizan aquí sus prácticas.\n\n¿Algo más?",
-            suggestions: ["Infraestructura", "Informática"]
-        },
-        comedor: {
-            response: "🍽️ **COMEDOR ESCOLAR**\n\nNuestro comedor tiene capacidad para **150 estudiantes** y ofrece alimentación durante el horario escolar.\n\n¿Otra pregunta?",
-            suggestions: ["Infraestructura", "Contacto"]
-        },
-        dormitorios: {
-            response: "🛏️ **DORMITORIOS**\n\nEl centro cuenta con **8 dormitorios**, de los cuales **3 están habilitados** para estudiantes internos.\n\n¿Algo más?",
-            suggestions: ["Infraestructura", "Contacto"]
-        },
+            var { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+            var supabase = createClient(config.url, config.key);
 
-        // ----- DEPORTES Y VIDA ESTUDIANTIL -----
-        deportes: {
-            response: "⚽ **DEPORTES**\n\nEl centro cuenta con:\n• 🏀 Cancha de baloncesto\n• 🏐 Cancha de voleibol\n• ⚾ Área de béisbol\n\nSe realizan actividades deportivas y competencias inter-escolaresregularmente.\n\n¿Te interesa la vida estudiantil?",
-            suggestions: ["Vida estudiantil", "Infraestructura"]
-        },
-        vida_estudiantil: {
-            response: "🎉 **VIDA ESTUDIANTIL**\n\nEn el IP República Bolivariana de Venezuela:\n• 🌱 Huerto escolar productivo\n• 🏅 Actividades de emulación\n• 🎭 Eventos culturales\n• ⚽ Competencias deportivas\n• 🤝 Jornadas de voluntariado\n\n¿Quieres saber más sobre alguna actividad?",
-            suggestions: ["Huerto", "Deportes", "Infraestructura"]
-        },
-        huerto: {
-            response: "🌱 **HUERTO ESCOLAR**\n\nNuestro huerto es un proyecto productivo donde los estudiantes aprenden:\n• Técnicas de agricultura\n• Manejo sustentable de recursos\n• Producción de alimentos\n\n¡Producimos verduras frescas para la comunidad escolar! 🥬🍅\n\n¿Algo más?",
-            suggestions: ["Vida estudiantil", "Infraestructura"]
-        },
+            var { data, error } = await supabase
+                .from('chatbot_knowledge')
+                .select('*')
+                .eq('activo', true);
 
-        // ----- ESTADÍSTICAS -----
-        estadisticas: {
-            response: "📊 **ESTADÍSTICAS ACADÉMICAS**\n\n📈 **Promoción**: 98%\n💼 **Inserción laboral**: 85%\n📚 **Retención**: 90.6%\n\n**Matrícula histórica:**\n• 2022-2023: 200 estudiantes\n• 2023-2024: 180 estudiantes\n• 2024-2025: 165 estudiantes\n• 2025-2026: 80 estudiantes\n\n¿Alguna otra pregunta?",
-            suggestions: ["Especialidades", "Contacto"]
-        },
-        promocion: {
-            response: "📈 **TASA DE PROMOCIÓN**\n\nNuestro centro alcanza un **98% de promoción** académica, lo que demuestra la calidad de la formación que ofrecemos.\n\n¿Algo más?",
-            suggestions: ["Estadísticas", "Especialidades"]
-        },
-        empleo: {
-            response: "💼 **INSERCIÓN LABORAL**\n\nEl **85% de nuestros graduados** consiguen empleo en su especialidad. Trabajamos estrechamente con empresas y organizaciones para facilitar la inserción laboral.\n\n¿Te interesa alguna especialidad?",
-            suggestions: ["Especialidades", "Inscripción"]
-        },
+            if (error || !data || data.length === 0) return;
 
-        // ----- PRECIOS Y BECAS -----
-        becas: {
-            response: "🎓 **BECAS**\n\nEl centro ofrece becas según:\n• Rendimiento académico\n• Situación socioeconómica\n• Participación en actividades\n\nConsulta en secretaría para más información.\n\n¿Algo más?",
-            suggestions: ["Inscripción", "Contacto"]
-        },
-        precio: {
-            response: "💰 **COSTOS**\n\nLa educación técnica en Cuba es **gratuita**. No se pagan matrículas ni mensualidades.\n\n¿Alguna otra duda?",
-            suggestions: ["Inscripción", "Becas"]
-        },
-        costo: {
-            response: "💰 **COSTOS**\n\nLa educación técnica en Cuba es **gratuita**. No se pagan matrículas ni mensualidades.\n\n¿Alguna otra duda?",
-            suggestions: ["Inscripción", "Becas"]
-        },
-        gratis: {
-            response: "✅ **Así es**. La educación en nuestro centro es completamente **gratuita**. 🇨🇺\n\n¿Te gustaría inscribirte?",
-            suggestions: ["InSCRIPTOR", "Requisitos"]
-        },
+            data.forEach(function(item) {
+                KNOWLEDGE[item.clave] = {
+                    response: item.respuesta,
+                    suggestions: item.sugerencias || []
+                };
+            });
 
-        // ----- CERTIFICACIÓN -----
-        titulo: {
-            response: "🎓 **TÍTULO**\n\nAl egresar del centro obtienes el título de **Técnico Medio** en la especialidad cursada, reconocido por el Ministerio de Educación.\n\n¿Algo más?",
-            suggestions: ["Inscripción", "Especialidades"]
-        },
-        certificado: {
-            response: "📜 **CERTIFICADO**\n\nAl finalizar tus estudios recibes:\n• Título de Técnico Medio\n• Certificado de competencias laborales\n\nAmbos son documentos oficialmente reconocidos.\n\n¿Alguna otra duda?",
-            suggestions: ["Título", "Inscripción"]
-        },
-
-        // ----- DESPEDIDA Y AGRADECIMIENTOS -----
-        chiste: {
-            response: "😄 No soy muy gracioso, pero te cuento uno técnico:\n\n¿Por qué el programador fue al médico? ¡Porque tenía un **bug** en el sistema! 😂\n\n¿Algo más en lo que te pueda ayudar?",
-            suggestions: ["Especialidades", "Contacto"]
-        },
-        ayuda: {
-            response: "❓ **¿EN QUÉ PUEDO AYUDARTE?**\n\nPuedo responderte sobre:\n• 📚 Especialidades del centro\n• 📝 Requisitos de inscripción\n• 🏫 Infraestructura\n• 📍 Ubicación y contacto\n• 📊 Estadísticas académicas\n• 🏃 Deportes y vida estudiantil\n• 💰 Costos y becas\n\n¡Solo pregúntame!",
-            suggestions: ["Especialidades", "Inscripción", "Infraestructura", "Contacto"]
-        },
-        que_puedes: {
-            response: "🤖 **MIS CAPACIDADES**\n\nPuedo ayudarte con:\n\n📚 Información sobre especialidades\n📝 Proceso de inscripción\n🏫 Infraestructura del centro\n📍 Ubicación y contacto\n📊 Estadísticas académicas\n💰 Costos y becas\n🏃 Deportes y actividades\n\n¡Pregúntame lo que necesites!",
-            suggestions: ["Especialidades", "Ayuda"]
+            lastKnowledgeUpdate = now;
+        } catch(e) {
+            console.log('Chatbot: usando conocimiento estático');
         }
+    }
+
+    // ---------- BASE DE CONOCIMIENTO ESTÁTICO (fallback) ----------
+    var STATIC_KNOWLEDGE = {
+        saludo: { response: "¡Hola! 👋 Bienvenido al IP República Bolivariana de Venezuela.\n\nSoy el asistente virtual del centro. ¿En qué puedo ayudarte?", suggestions: ["Especialidades", "Inscripción", "Contacto", "Proyectos"] },
+        saludo_tarde: { response: "¡Buenas tardes! 👋 ¿En qué puedo ayudarte?", suggestions: ["Especialidades", "Inscripción", "Contacto"] },
+        saludo_noche: { response: "¡Buenas noches! 👋 Aunque es tarde, estoy aquí para ayudarte.", suggestions: ["Especialidades", "Contacto"] },
+        adios: { response: "¡Hasta luego! 👋 ¡Que tengas un excelente día!", suggestions: [] },
+        gracias: { response: "¡De nada! 😊 ¿Tienes alguna otra pregunta?", suggestions: ["Especialidades", "Contacto"] },
+        si: { response: "¡Genial! 😊 ¿En qué te puedo ayudar?", suggestions: ["Especialidades", "Inscripción", "Proyectos"] },
+        no: { response: "No hay problema. Si necesitas algo más, aquí estaré. 👋", suggestions: ["Especialidades", "Contacto"] },
+        ayuda: { response: "❓ Puedo ayudarte con:\n\n• Especialidades del centro\n• Requisitos de inscripción\n• Infraestructura\n• Ubicación y contacto\n• Estadísticas\n• Proyectos en desarrollo\n\n¡Solo pregúntame!", suggestions: ["Especialidades", "Inscripción", "Contacto", "Proyectos"] },
+        que_puedes: { response: "🤖 Mis capacidades:\n\n📚 Especialidades\n📝 Inscripción\n🏫 Infraestructura\n📍 Contacto\n📊 Estadísticas\n🚀 Proyectos\n\n¡Pregúntame lo que necesites!", suggestions: ["Especialidades", "Ayuda"] },
+        chiste: { response: "😄 ¿Por qué el programador fue al médico? ¡Porque tenía un bug en el sistema! 😂\n\n¿Algo más?", suggestions: ["Especialidades", "Contacto"] },
+        horario: { response: "🕒 HORARIO\n\nLunes a Viernes: 8:00 AM - 4:00 PM\n\nLas clases se imparten por turnos según el grupo.", suggestions: ["Contacto", "Especialidades"] },
+        becas: { response: "🎓 BECAS\n\nEl centro ofrece becas según:\n• Rendimiento académico\n• Situación socioeconómica\n• Participación en actividades\n\nConsulta en secretaría.", suggestions: ["Inscripción", "Contacto"] },
+        titulo: { response: "🎓 TÍTULO\n\nAl egresar obtienes el título de Técnico Medio en tu especialidad, reconocido por el Ministerio de Educación.", suggestions: ["Inscripción", "Especialidades"] },
+        laboratorio: { response: "💻 LABORATORIOS\n\nContamos con 2 laboratorios de informática equipados con computadoras actualizadas, internet y software especializado.", suggestions: ["Infraestructura", "Informática"] },
+        comedor: { response: "🍽️ COMEDOR\n\nCapacidad para 150 comensales simultáneos. Cocina con cocción a gas.", suggestions: ["Infraestructura", "Dormitorios"] },
+        dormitorios: { response: "🛏️ DORMITORIOS\n\n8 dormitorios (4 habilitados: 2 femeninos y 2 masculinos).", suggestions: ["Infraestructura", "Comedor"] },
+        huerto: { response: "🌱 HUERTO ESCOLAR\n\nProyecto productivo donde los estudiantes aprenden agricultura y manejo sustentable. Producimos verduras frescas.", suggestions: ["Vida estudiantil", "Proyectos"] },
+        vida_estudiantil: { response: "🎉 VIDA ESTUDIANTIL\n\n• Huerto escolar\n• Actividades de emulación\n• Eventos culturales\n• Competencias deportivas\n• Jornadas de voluntariado", suggestions: ["Huerto", "Deportes", "Proyectos"] }
     };
 
-    // ---------- SINÓNIMOS Y ALIAS ----------
-    var SYNONYMS = {
-        "informatica": ["informatica", "informatico", "programacion", "programar", "software", "desarrollo", "computacion", "computadora", "codigo", "redes", "sistema"],
-        "electronica": ["electronica", "electronico", "circuitos", "telecomunicaciones", "chip", "microchip", "digital"],
-        "automatica": ["automatica", "automatico", "robotica", "robot", "plc", "automatizacion", "control", "industrial"],
-        "inscripcion": ["inscripcion", "inscribir", "inscribirse", "matricula", "matricular", "apuntar", "registrarse", "registro", "nuevo", "nueva"],
-        "contacto": ["contacto", "contactar", "llamar", "telefono", "email", "correo", "comunicar"],
-        "ubicacion": ["ubicacion", "donde", "direccion", "dirrecion", "llegar", "mapa", "encuentran", "esta"],
-        "horario": ["horario", "hora", "horas", "cuando", "abren", "cierran", "atencion"],
-        "infraestructura": ["infraestructura", "instalaciones", "aulas", "edificio", "local", "espacio", "espacios", "comedor", "dormitorio", "laboratorio"],
-        "especialidades": ["especialidades", "carrera", "carreras", "opcion", "opciones", "estudiar", "formacion", "tecnico"],
-        "inscripcion": ["inscripcion", "requisitos", "documentos", "papeles", "necesito"],
-        "deportes": ["deportes", "deporte", "basket", "baloncesto", "voleibol", "beisbol", "futbol", "correr", "competencia"],
-        "becas": ["beca", "becas", "ayuda", "economico", "dinero", "costo", "costos", "pago", "pagan", "gratis", "gratuito", "precio"],
-        "profesores": ["profesor", "profesores", "maestro", "maestros", "docente", "docentes", "profesa"],
-        "estadisticas": ["estadistica", "estadisticas", "datos", "numeros", "matricula", "promocion", "empleo"],
-        "huerto": ["huerto", "siembra", "agricultura", "verdura", "verduras", "cosecha", "sembrar"],
-        "vidae": ["vida", "estudiantil", "actividades", "eventos", "cultural"],
-        "chiste": ["chiste", "chistes", "gracioso", "reir", "risa", "joke"],
-        "ayuda": ["ayuda", "ayudar", "help", "puedes", "capaz", "sabes"],
-        "titul": ["titulo", "certificado", "graduar", "egresar", "egreso"]
-    };
-
-    // ---------- RATE LIMITING ----------
-    var lastMessageTime = 0;
-    var MIN_INTERVAL = 1000;
+    // Fusionar conocimiento estático con el de Supabase
+    function getKnowledge(key) {
+        return KNOWLEDGE[key] || STATIC_KNOWLEDGE[key] || null;
+    }
 
     // ---------- NLP: LIMPIAR TEXTO ----------
     function cleanText(text) {
@@ -214,52 +79,70 @@
             .trim();
     }
 
-    // ---------- NLP: BUSCAR INTENCIÓN ----------
-    function findIntent(clean) {
-        // 1. Buscar coincidencia directa en KNOWLEDGE
-        for (var key in KNOWLEDGE) {
-            if (clean.includes(key)) return key;
-        }
+    // ---------- SINÓNIMOS ----------
+    var SYNONYMS = {
+        "especialidades": ["especialidades","carrera","carreras","estudiar","formacion","tecnico","que puedo"],
+        "informatica": ["informatica","informatico","programacion","programar","software","desarrollo","computacion","redes"],
+        "electronica": ["electronica","electronico","circuitos","telecomunicaciones","chip","digital"],
+        "automatica": ["automatica","automatico","robotica","robot","plc","automatizacion","control"],
+        "inscripcion": ["inscripcion","inscribir","inscribirse","matricula","matricular","apuntar","registro"],
+        "mision": ["mision","que hacen","para que existen"],
+        "vision": ["vision","como se ven","a donde van"],
+        "valores": ["valores","principios","que defienden"],
+        "directivos": ["directivos","director","quien dirige","equipo"],
+        "instalaciones": ["instalaciones","edificio","aulas","donde estan","espacios"],
+        "gratuito": ["gratis","gratuito","pago","cuanto cuesta","precio","costo"],
+        "proyectos": ["proyectos","que van a hacer","futuro","proximo","planes"],
+        "deportes": ["deportes","deporte","basket","baloncesto","voleibol","beisbol"],
+        "contacto": ["contacto","contactar","llamar","telefono","email"],
+        "ubicacion": ["ubicacion","donde","direccion","llegar","mapa"],
+        "horario": ["horario","hora","cuando abren","cuando cierran"],
+        "estadisticas": ["estadistica","estadisticas","datos","matricula total","promocion"],
+        "huerto": ["huerto","siembra","agricultura","verdura","cosecha"],
+        "vida_estudiantil": ["vida","estudiantil","actividades","eventos"],
+        "chiste": ["chiste","chistes","gracioso","reir","joke"],
+        "ayuda": ["ayuda","ayudar","help","puedes","sabes"],
+        "titulo": ["titulo","certificado","graduar","egresar"]
+    };
 
-        // 2. Buscar por sinónimos
+    // ---------- PATRONES ----------
+    var PATTERNS = [
+        { keys: ["hola","buenos","buenas","saludos","hey"], intent: "saludo" },
+        { keys: ["adios","hasta luego","nos vemos","bye","chao"], intent: "adios" },
+        { keys: ["gracias","agradezco","thanks"], intent: "gracias" },
+        { keys: ["cuanto cuesta","cuanto vale","es gratis","pago"], intent: "gratuito" },
+        { keys: ["donde quedan","donde esta","como llego"], intent: "ubicacion" },
+        { keys: ["que hora","a que hora","cuando abren"], intent: "horario" },
+        { keys: ["telefono","numero de","llamar"], intent: "contacto" },
+        { keys: ["que puedo","que sabes","capaz"], intent: "que_puedes" },
+        { keys: ["necesito ayuda","ayudame","help"], intent: "ayuda" },
+        { keys: ["cuantos estudiantes","cuantos alumnos"], intent: "estadisticas" },
+        { keys: ["que especialidad","que carrera"], intent: "especialidades" },
+        { keys: ["requisito","que necesito","documentos"], intent: "inscripcion" },
+        { keys: ["proyecto","futuro","planes","proximo"], intent: "proyectos" },
+        { keys: ["director","quien dirige","directivos"], intent: "directivos" },
+        { keys: ["mision","para que sirven"], intent: "mision" },
+        { keys: ["vision","como se ven"], intent: "vision" },
+        { keys: ["valores","principios"], intent: "valores" }
+    ];
+
+    function findIntent(clean) {
+        for (var key in KNOWLEDGE) { if (clean.includes(key)) return key; }
+        for (var key in STATIC_KNOWLEDGE) { if (clean.includes(key)) return key; }
         for (var intent in SYNONYMS) {
             var aliases = SYNONYMS[intent];
             for (var i = 0; i < aliases.length; i++) {
                 if (clean.includes(aliases[i])) return intent;
             }
         }
-
-        // 3. Detección por patrones de palabras clave
-        var patterns = [
-            { keys: ["hola", "buenos", "buenas", "saludos", "hey"], intent: "saludo" },
-            { keys: ["adios", "hasta luego", "nos vemos", "bye", "chao"], intent: "adios" },
-            { keys: ["gracias", "agradezco", "thanks"], intent: "gracias" },
-            { keys: ["cuanto cuesta", "cuanto vale", "es gratis", "pago"], intent: "precio" },
-            { keys: ["donde quedan", "donde esta", "como llego", "direccion"], intent: "ubicacion" },
-            { keys: ["que hora", "a que hora", "cuando abren", "cuando cierran"], intent: "horario" },
-            { keys: ["telefono", "numero de", "llamar"], intent: "telefono" },
-            { keys: ["que puedo", "que sabes", "que sabes hacer", "capaz"], intent: "que_puedes" },
-            { keys: ["necesito ayuda", "ayudame", "help"], intent: "ayuda" },
-            { keys: ["cuantos estudiantes", "cuantos alumnos", "matricula total"], intent: "estadisticas" },
-            { keys: ["que especialidad", "que carrera", "que puedo estudiar"], intent: "especialidades" },
-            { keys: ["requisito", "que necesito", "documentos"], intent: "requisitos" },
-            { keys: ["como me inscribo", "quiero inscribirme", "me quiero inscribir"], intent: "inscripcion" }
-        ];
-
-        for (var j = 0; j < patterns.length; j++) {
-            var match = patterns[j].keys.some(function(k) { return clean.includes(k); });
-            if (match) return patterns[j].intent;
+        for (var j = 0; j < PATTERNS.length; j++) {
+            var match = PATTERNS[j].keys.some(function(k) { return clean.includes(k); });
+            if (match) return PATTERNS[j].intent;
         }
-
-        // 4. Detectar saludo genérico (palabras de 3+ chars que suenan a saludo)
-        if (clean.length < 15 && /^(hola|buenas?|hey|que tal|que onda)/.test(clean)) {
-            return "saludo";
-        }
-
+        if (clean.length < 15 && /^(hola|buenas?|hey|que tal)/.test(clean)) return "saludo";
         return null;
     }
 
-    // ---------- SALUDO POR HORA ----------
     function getGreetingIntent() {
         var hour = new Date().getHours();
         if (hour >= 6 && hour < 12) return "saludo";
@@ -267,15 +150,76 @@
         return "saludo_noche";
     }
 
-    // ---------- GUARDAR HISTORIAL ----------
-    function guardarHistorial(texto, esBot, sugerencias) {
-        var historial = JSON.parse(sessionStorage.getItem('chat_history')) || [];
-        historial.push({ texto: texto, esBot: esBot, sugerencias: sugerencias || [] });
-        if (historial.length > 50) historial = historial.slice(-50);
-        sessionStorage.setItem('chat_history', JSON.stringify(historial));
+    // ---------- UI ----------
+    var lastMessageTime = 0;
+    var MIN_INTERVAL = 1000;
+
+    function removeTypingIndicator() {
+        var el = document.getElementById('chat-typing');
+        if (el) el.remove();
     }
 
-    // ---------- SONIDO ----------
+    function showTypingIndicator() {
+        var chatMessages = document.getElementById('chat-messages');
+        if (!chatMessages || document.getElementById('chat-typing')) return;
+        var div = document.createElement('div');
+        div.id = 'chat-typing';
+        div.className = 'message-wrapper bot-wrapper';
+        div.innerHTML = '<div class="message bot-message typing-indicator"><span></span><span></span><span></span></div>';
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function addMessage(text, isBot, suggestions) {
+        removeTypingIndicator();
+        var chatMessages = document.getElementById('chat-messages');
+        if (!chatMessages) return;
+
+        var wrapper = document.createElement('div');
+        wrapper.className = isBot ? 'message-wrapper bot-wrapper' : 'message-wrapper user-wrapper';
+
+        var msg = document.createElement('div');
+        msg.className = isBot ? 'message bot-message' : 'message user-message';
+
+        if (isBot) {
+            msg.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+        } else {
+            msg.textContent = text;
+        }
+
+        wrapper.appendChild(msg);
+        chatMessages.appendChild(wrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        if (isBot && suggestions && suggestions.length > 0) {
+            showQuickReplies(suggestions);
+        }
+
+        // Guardar en sesión
+        try {
+            var historial = JSON.parse(sessionStorage.getItem('chat_history')) || [];
+            historial.push({ texto: text, esBot: isBot, sugerencias: suggestions || [] });
+            if (historial.length > 50) historial = historial.slice(-50);
+            sessionStorage.setItem('chat_history', JSON.stringify(historial));
+        } catch(e) {}
+    }
+
+    function showQuickReplies(suggestions) {
+        var container = document.getElementById('chat-quick-replies');
+        if (!container) return;
+        container.innerHTML = '';
+        suggestions.forEach(function(sug) {
+            var btn = document.createElement('button');
+            btn.className = 'quick-reply-btn';
+            btn.textContent = sug;
+            btn.addEventListener('click', function() {
+                var input = document.getElementById('user-input');
+                if (input) { input.value = sug; handleSend(); }
+            });
+            container.appendChild(btn);
+        });
+    }
+
     function reproducirSonido() {
         try {
             var ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -292,82 +236,6 @@
         } catch(e) {}
     }
 
-    // ---------- TYPING INDICATOR ----------
-    function removeTypingIndicator() {
-        var indicator = document.getElementById('chat-typing');
-        if (indicator) indicator.remove();
-    }
-
-    function showTypingIndicator() {
-        var chatMessages = document.getElementById('chat-messages');
-        if (!chatMessages || document.getElementById('chat-typing')) return;
-
-        var typingDiv = document.createElement('div');
-        typingDiv.id = 'chat-typing';
-        typingDiv.className = 'message-wrapper bot-wrapper';
-        typingDiv.innerHTML = '<div class="message bot-message typing-indicator"><span></span><span></span><span></span></div>';
-        chatMessages.appendChild(typingDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    // ---------- AGREGAR MENSAJE ----------
-    function addMessage(text, isBot, suggestions, save) {
-        removeTypingIndicator();
-        var chatMessages = document.getElementById('chat-messages');
-        if (!chatMessages) return;
-
-        var messageContainer = document.createElement('div');
-        messageContainer.className = isBot ? 'message-wrapper bot-wrapper' : 'message-wrapper user-wrapper';
-
-        var messageDiv = document.createElement('div');
-        messageDiv.className = isBot ? 'message bot-message' : 'message user-message';
-
-        if (isBot) {
-            var formatted = text
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n/g, '<br>');
-            messageDiv.innerHTML = formatted;
-        } else {
-            messageDiv.textContent = text;
-        }
-
-        messageContainer.appendChild(messageDiv);
-        chatMessages.appendChild(messageContainer);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        if (isBot && suggestions && suggestions.length > 0) {
-            showQuickReplies(suggestions);
-        }
-
-        if (save !== false) {
-            guardarHistorial(text, isBot, isBot ? suggestions : null);
-        }
-    }
-
-    // ---------- QUICK REPLIES ----------
-    function showQuickReplies(suggestions) {
-        var container = document.getElementById('chat-quick-replies');
-        if (!container) return;
-
-        container.innerHTML = '';
-        if (!suggestions || suggestions.length === 0) return;
-
-        suggestions.forEach(function(sug) {
-            var btn = document.createElement('button');
-            btn.className = 'quick-reply-btn';
-            btn.textContent = sug;
-            btn.addEventListener('click', function() {
-                var input = document.getElementById('user-input');
-                if (input) {
-                    input.value = sug;
-                    handleSend();
-                }
-            });
-            container.appendChild(btn);
-        });
-    }
-
-    // ---------- ENVIAR MENSAJE ----------
     function handleSend() {
         var input = document.getElementById('user-input');
         if (!input || !input.value.trim()) return;
@@ -378,66 +246,56 @@
 
         var text = input.value.trim();
         input.value = '';
+        addMessage(text, false, null);
 
-        addMessage(text, false, null, true);
-
-        var quickRepliesContainer = document.getElementById('chat-quick-replies');
-        if (quickRepliesContainer) quickRepliesContainer.innerHTML = '';
+        var qr = document.getElementById('chat-quick-replies');
+        if (qr) qr.innerHTML = '';
 
         showTypingIndicator();
-
-        var delay = 800 + Math.random() * 800;
 
         setTimeout(function() {
             var cleaned = cleanText(text);
             var intent = findIntent(cleaned);
+            var reply = getKnowledge(intent);
 
-            if (!intent) {
+            if (!reply) {
                 var fallbacks = [
                     "🤔 No estoy seguro de entender eso. ¿Puedes reformular tu pregunta?",
-                    "Lo siento, no tengo información sobre eso. Intenta preguntar sobre **especialidades**, **inscripción** o **contacto**.",
-                    "No comprendo bien. ¿Quieres saber sobre las **especialidades**, el proceso de **inscripción** o la **ubicación** del centro?"
+                    "Lo siento, no tengo información sobre eso. Intenta preguntar sobre especialidades, inscripción o contacto.",
+                    "No comprendo bien. ¿Quieres saber sobre las especialidades, inscripción o ubicación del centro?"
                 ];
                 var msg = fallbacks[Math.floor(Math.random() * fallbacks.length)];
                 reproducirSonido();
-                addMessage(msg, true, ["Especialidades", "Inscripción", "Contacto", "Ayuda"], true);
-                return;
-            }
-
-            var reply = KNOWLEDGE[intent];
-            if (!reply) {
-                addMessage("No tengo información específica sobre eso. ¿En qué más te puedo ayudar?", true, ["Especialidades", "Contacto"], true);
+                addMessage(msg, true, ["Especialidades", "Inscripción", "Contacto", "Ayuda"]);
                 return;
             }
 
             reproducirSonido();
-            addMessage(reply.response, true, reply.suggestions, true);
-        }, delay);
+            addMessage(reply.response, true, reply.suggestions);
+        }, 800 + Math.random() * 600);
     }
 
-    // ---------- CARGAR HISTORIAL ----------
     function cargarHistorial() {
-        var historial = JSON.parse(sessionStorage.getItem('chat_history'));
-        if (historial && historial.length > 0) {
-            historial.forEach(function(msg) {
-                addMessage(msg.texto, msg.esBot, null, false);
-            });
-            var ultimoBot = historial.slice().reverse().find(function(m) { return m.esBot; });
-            if (ultimoBot && ultimoBot.sugerencias) {
-                showQuickReplies(ultimoBot.sugerencias);
+        try {
+            var historial = JSON.parse(sessionStorage.getItem('chat_history'));
+            if (historial && historial.length > 0) {
+                historial.forEach(function(msg) { addMessage(msg.texto, msg.esBot, null); });
+                var ultimoBot = historial.slice().reverse().find(function(m) { return m.esBot; });
+                if (ultimoBot && ultimoBot.sugerencias) showQuickReplies(ultimoBot.sugerencias);
+            } else {
+                showTypingIndicator();
+                setTimeout(function() {
+                    var greetingKey = getGreetingIntent();
+                    var greeting = getKnowledge(greetingKey) || STATIC_KNOWLEDGE[greetingKey];
+                    if (greeting) {
+                        reproducirSonido();
+                        addMessage(greeting.response, true, greeting.suggestions);
+                    }
+                }, 600);
             }
-        } else {
-            showTypingIndicator();
-            setTimeout(function() {
-                var greetingKey = getGreetingIntent();
-                var greeting = KNOWLEDGE[greetingKey];
-                reproducirSonido();
-                addMessage(greeting.response, true, greeting.suggestions, true);
-            }, 600);
-        }
+        } catch(e) {}
     }
 
-    // ---------- INICIALIZAR ----------
     function initChatbot() {
         var input = document.getElementById('user-input');
         var chatWidget = document.getElementById('chat-widget');
@@ -448,17 +306,11 @@
         if (!input) return;
 
         if (sendBtn) sendBtn.addEventListener('click', handleSend);
-
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') handleSend();
-        });
+        input.addEventListener('keypress', function(e) { if (e.key === 'Enter') handleSend(); });
 
         if (chatOpenBtn) {
             chatOpenBtn.addEventListener('click', function() {
-                if (chatWidget) {
-                    chatWidget.classList.remove('hidden');
-                    input.focus();
-                }
+                if (chatWidget) { chatWidget.classList.remove('hidden'); input.focus(); }
             });
         }
 
@@ -468,8 +320,17 @@
             });
         }
 
-        cargarHistorial();
+        // Cargar conocimiento de Supabase
+        loadKnowledge(false).then(function() { cargarHistorial(); });
+
+        // Actualizar conocimiento cada 5 minutos
+        setInterval(function() { loadKnowledge(false); }, CACHE_DURATION);
     }
+
+    // Exponer función de refresh para el admin
+    window.refreshChatbotKnowledge = function() {
+        return loadKnowledge(true);
+    };
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initChatbot);

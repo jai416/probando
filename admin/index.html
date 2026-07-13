@@ -123,6 +123,32 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Sección Chatbot -->
+        <div class="toolbar" style="margin-top:40px;">
+            <h2>Chatbot - Conocimiento</h2>
+            <div style="display:flex;gap:10px;">
+                <button class="btn-new" style="background:#007bff;" id="btn-new-knowledge">+ Nuevo Dato</button>
+                <button class="btn-new" style="background:#17a2b8;" id="btn-refresh-chatbot">🔄 Actualizar Chatbot</button>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Clave</th>
+                        <th>Respuesta (preview)</th>
+                        <th>Categoría</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="knowledge-table">
+                    <tr><td colspan="5" class="empty-state">Cargando conocimiento...</td></tr>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <!-- Modal -->
@@ -301,6 +327,161 @@
         });
 
         loadNews();
+
+        // ========== CHATBOT KNOWLEDGE MANAGEMENT ==========
+        const knowledgeTable = document.getElementById('knowledge-table');
+        const btnNewKnowledge = document.getElementById('btn-new-knowledge');
+        const btnRefreshChatbot = document.getElementById('btn-refresh-chatbot');
+
+        async function loadKnowledge() {
+            const { data, error } = await supabase
+                .from('chatbot_knowledge')
+                .select('*')
+                .order('clave');
+
+            if (error || !data || data.length === 0) {
+                knowledgeTable.innerHTML = '<tr><td colspan="5" class="empty-state">No hay conocimiento registrado</td></tr>';
+                return;
+            }
+
+            knowledgeTable.innerHTML = data.map(k => `
+                <tr>
+                    <td><strong>${k.clave}</strong></td>
+                    <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${k.respuesta.substring(0, 80)}...</td>
+                    <td>${k.categoria}</td>
+                    <td><span class="badge ${k.activo ? 'badge-published' : 'badge-draft'}">${k.activo ? 'Activo' : 'Inactivo'}</span></td>
+                    <td class="actions">
+                        <button class="btn-edit" onclick="editKnowledge('${k.id}')">Editar</button>
+                        <button class="btn-delete" onclick="deleteKnowledge('${k.id}')">${k.activo ? 'Desactivar' : 'Activar'}</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Modal conocimiento
+        const knowledgeModal = document.createElement('div');
+        knowledgeModal.className = 'modal-overlay';
+        knowledgeModal.id = 'knowledge-modal';
+        knowledgeModal.innerHTML = `
+            <div class="modal">
+                <h2 id="km-modal-title">Nuevo Dato del Chatbot</h2>
+                <form id="knowledge-form">
+                    <input type="hidden" id="km-id">
+                    <div class="form-group">
+                        <label>Clave (palabra clave para activar)</label>
+                        <input type="text" id="km-clave" required placeholder="ej: matricula, horario, proyectos">
+                    </div>
+                    <div class="form-group">
+                        <label>Respuesta del chatbot</label>
+                        <textarea id="km-respuesta" rows="5" required placeholder="Respuesta que dará el chatbot..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Sugerencias (separadas por coma)</label>
+                        <input type="text" id="km-sugerencias" placeholder="Especialidades, Inscripción, Contacto">
+                    </div>
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select id="km-categoria">
+                            <option value="general">General</option>
+                            <option value="academico">Académico</option>
+                            <option value="admisiones">Admisiones</option>
+                            <option value="institucional">Institucional</option>
+                            <option value="infraestructura">Infraestructura</option>
+                            <option value="contacto">Contacto</option>
+                            <option value="vida_estudiantil">Vida Estudiantil</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="km-activo" checked> Activo</label>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="document.getElementById('knowledge-modal').classList.remove('active')">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        document.body.appendChild(knowledgeModal);
+
+        const kmForm = document.getElementById('knowledge-form');
+        const kmModal = document.getElementById('knowledge-modal');
+
+        btnNewKnowledge.addEventListener('click', () => {
+            document.getElementById('km-modal-title').textContent = 'Nuevo Dato del Chatbot';
+            kmForm.reset();
+            document.getElementById('km-id').value = '';
+            document.getElementById('km-activo').checked = true;
+            kmModal.classList.add('active');
+        });
+
+        kmForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('km-id').value;
+            const sugerencias = document.getElementById('km-sugerencias').value.split(',').map(s => s.trim()).filter(s => s);
+            const data = {
+                clave: document.getElementById('km-clave').value.toLowerCase(),
+                respuesta: document.getElementById('km-respuesta').value,
+                sugerencias: sugerencias,
+                categoria: document.getElementById('km-categoria').value,
+                activo: document.getElementById('km-activo').checked,
+                updated_at: new Date().toISOString()
+            };
+
+            if (id) {
+                await supabase.from('chatbot_knowledge').update(data).eq('id', id);
+            } else {
+                await supabase.from('chatbot_knowledge').insert([data]);
+            }
+
+            kmModal.classList.remove('active');
+            loadKnowledge();
+        });
+
+        window.editKnowledge = async (id) => {
+            const { data } = await supabase.from('chatbot_knowledge').select('*').eq('id', id).single();
+            if (data) {
+                document.getElementById('km-modal-title').textContent = 'Editar Dato del Chatbot';
+                document.getElementById('km-id').value = data.id;
+                document.getElementById('km-clave').value = data.clave;
+                document.getElementById('km-respuesta').value = data.respuesta;
+                document.getElementById('km-sugerencias').value = (data.sugerencias || []).join(', ');
+                document.getElementById('km-categoria').value = data.categoria;
+                document.getElementById('km-activo').checked = data.activo;
+                kmModal.classList.add('active');
+            }
+        };
+
+        window.deleteKnowledge = async (id) => {
+            const { data } = await supabase.from('chatbot_knowledge').select('activo').eq('id', id).single();
+            if (data) {
+                await supabase.from('chatbot_knowledge').update({ activo: !data.activo }).eq('id', id);
+                loadKnowledge();
+            }
+        };
+
+        // Botón actualizar chatbot
+        btnRefreshChatbot.addEventListener('click', async () => {
+            btnRefreshChatbot.textContent = '⏳ Actualizando...';
+            btnRefreshChatbot.disabled = true;
+            try {
+                if (window.refreshChatbotKnowledge) {
+                    await window.refreshChatbotKnowledge();
+                }
+                // Forzar recarga en todas las pestañas
+                if ('BroadcastChannel' in window) {
+                    const bc = new BroadcastChannel('chatbot-refresh');
+                    bc.postMessage('refresh');
+                    bc.close();
+                }
+                alert('✅ Chatbot actualizado. Los visitantes verán los cambios en su próxima conversación.');
+            } catch(e) {
+                alert('Error al actualizar: ' + e.message);
+            }
+            btnRefreshChatbot.textContent = '🔄 Actualizar Chatbot';
+            btnRefreshChatbot.disabled = false;
+        });
+
+        loadKnowledge();
     </script>
 </body>
 </html>
