@@ -174,16 +174,16 @@
         </div>
     </div>
 
+    <script src="../config.js"></script>
     <script type="module">
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-        const SUPABASE_URL = 'https://vkgnypcjpioixkwakxvy.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_wRk77sSzRyx5Q3Y4dnuEcw_3Jp3SEZb';
-        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+        const config = window.SUPABASE_CONFIG;
+        const supabase = createClient(config.url, config.key);
 
-        // Check auth
+        // Check auth + role
         const user = JSON.parse(localStorage.getItem('iprbv_admin'));
-        if (!user) {
+        if (!user || user.rol !== 'admin') {
             window.location.href = '/admin/login.html';
         } else {
             document.getElementById('user-name').textContent = user.nombre;

@@ -238,9 +238,11 @@
     </footer>
     <script src="javascript/main.js" defer></script>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}</script>
+    <script src="config.js"></script>
     <script type="module">
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-        const supabase = createClient('https://vkgnypcjpioixkwakxvy.supabase.co', 'sb_publishable_wRk77sSzRyx5Q3Y4dnuEcw_3Jp3SEZb');
+        const config = window.SUPABASE_CONFIG;
+        const supabase = createClient(config.url, config.key);
         
         async function loadDynamicNews() {
             const { data } = await supabase.from('noticias').select('*').eq('publicada', true).order('created_at', { ascending: false });

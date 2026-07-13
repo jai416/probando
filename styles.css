@@ -873,12 +873,23 @@ body.dark-mode .responsive-table tr:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 45px;
+    align-items: start;
 }
 
 .contact-info {
     display: flex;
     flex-direction: column;
     gap: 25px;
+}
+
+.contact-form-container {
+    background: #f2f3f6;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .contact-item {
