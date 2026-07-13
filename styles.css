@@ -1946,6 +1946,124 @@ body.dark-mode .contact-form-container {
     }
 }
 
+/* ---------- MISSION & VISION ---------- */
+.mission-vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+.mission-vision-grid .content-section { margin-bottom: 0; }
+.mission-vision-grid h3 { color: var(--secondary); margin-bottom: 10px; }
+
+/* ---------- INSTALLATIONS ---------- */
+.installations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+.installation-block { }
+.installation-block h3 { color: var(--primary); margin-bottom: 12px; font-size: 1.2rem; }
+.installation-list { list-style: none; padding: 0; }
+.installation-list li { padding: 8px 0; border-bottom: 1px solid var(--gray-light); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+.installation-list li:before { content: "•"; color: var(--secondary); font-weight: bold; font-size: 1.2rem; }
+body.dark-mode .installation-list li { border-bottom-color: rgba(255,255,255,0.1); }
+
+/* ---------- PROJECTS ---------- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+.project-card {
+    background: var(--light);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid var(--gray-light);
+}
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+.project-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gray-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    color: var(--primary);
+    transition: var(--transition);
+}
+.project-card:hover .project-icon {
+    background: var(--primary);
+    color: white;
+}
+.project-card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.1rem; }
+.project-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; }
+.project-status {
+    display: inline-block;
+    background: rgba(212,175,55,0.15);
+    color: var(--secondary);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+body.dark-mode .project-card { border-top-color: rgba(255,255,255,0.1); }
+body.dark-mode .project-icon { background: rgba(255,255,255,0.1); color: var(--secondary); }
+body.dark-mode .project-card:hover .project-icon { background: var(--secondary); color: #000; }
+
+/* ---------- FORM OVERRIDES ---------- */
+.contact-form-container .form-group label { font-weight: 600; color: var(--primary); margin-bottom: 6px; }
+body.dark-mode .contact-form-container .form-group label { color: var(--secondary); }
+.contact-form-container .form-group input,
+.contact-form-container .form-group select,
+.contact-form-container .form-group textarea {
+    border: 2px solid var(--gray-light);
+    border-radius: 8px;
+    padding: 12px 15px;
+    transition: border-color 0.3s;
+}
+.contact-form-container .form-group input:focus,
+.contact-form-container .form-group select:focus,
+.contact-form-container .form-group textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(10,36,99,0.1);
+}
+body.dark-mode .contact-form-container .form-group input,
+body.dark-mode .contact-form-container .form-group select,
+body.dark-mode .contact-form-container .form-group textarea {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.05);
+}
+body.dark-mode .contact-form-container .form-group input:focus,
+body.dark-mode .contact-form-container .form-group select:focus,
+body.dark-mode .contact-form-container .form-group textarea:focus {
+    border-color: var(--secondary);
+}
+
+/* ---------- RESPONSIVE MOBILE (ALL SECTIONS) ---------- */
+@media (max-width: 768px) {
+    .mission-vision-grid { grid-template-columns: 1fr; }
+    .installations-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card { padding: 20px; }
+    .contact-form-container .btn { width: 100%; }
+    .contact-form-container .form-group input,
+    .contact-form-container .form-group select,
+    .contact-form-container .form-group textarea { font-size: 16px; }
+    .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .responsive-table { min-width: 400px; }
+}
+
 /* ---------- WHATSAPP FLOAT ---------- */
 .whatsapp-float {
     position: fixed;
