@@ -238,5 +238,31 @@
     </footer>
     <script src="javascript/main.js" defer></script>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}</script>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        const supabase = createClient('https://vkgnypcjpioixkwakxvy.supabase.co', 'sb_publishable_wRk77sSzRyx5Q3Y4dnuEcw_3Jp3SEZb');
+        
+        async function loadDynamicNews() {
+            const { data } = await supabase.from('noticias').select('*').eq('publicada', true).order('created_at', { ascending: false });
+            if (data && data.length > 0) {
+                const grid = document.querySelector('.news-grid');
+                grid.innerHTML = data.map(n => `
+                    <article class="news-card">
+                        <img src="${n.imagen_url || 'assets/icon-512.webp'}" alt="${n.titulo}" loading="lazy" decoding="async">
+                        <div class="news-card-body">
+                            <div class="news-date">
+                                <svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>
+                                ${new Date(n.created_at).toLocaleDateString('es-ES', {day:'numeric',month:'long',year:'numeric'})}
+                            </div>
+                            <h3>${n.titulo}</h3>
+                            <p>${n.resumen || n.contenido?.substring(0, 150) + '...' || ''}</p>
+                            <span class="news-tag">${n.categoria}</span>
+                        </div>
+                    </article>
+                `).join('');
+            }
+        }
+        loadDynamicNews();
+    </script>
 </body>
 </html>
