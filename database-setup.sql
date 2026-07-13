@@ -61,19 +61,32 @@ ON CONFLICT (clave) DO NOTHING;
 -- Habilitar Row Level Security
 ALTER TABLE usuarios ENABLE ROW LEVEL SECURITY;
 ALTER TABLE noticias ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chatbot_knowledge ENABLE ROW LEVEL SECURITY;
+
+-- Eliminar políticas existentes si las hay
+DROP POLICY IF EXISTS "Noticias publicadas visibles para todos" ON noticias;
+DROP POLICY IF EXISTS "Admin acceso total noticias" ON noticias;
+DROP POLICY IF EXISTS "Admin acceso total usuarios" ON usuarios;
+DROP POLICY IF EXISTS "Noticias publicadas" ON noticias;
+DROP POLICY IF EXISTS "Admin noticias" ON noticias;
+DROP POLICY IF EXISTS "Admin usuarios" ON usuarios;
 
 -- Políticas de acceso para noticias publicadas (público)
-CREATE POLICY "Noticias publicadas visibles para todos"
+CREATE POLICY "noticias_select_public"
   ON noticias FOR SELECT
   USING (publicada = true);
 
 -- Políticas de admin (acceso total)
-CREATE POLICY "Admin acceso total noticias"
+CREATE POLICY "admin_all_noticias"
   ON noticias FOR ALL
   USING (true);
 
-CREATE POLICY "Admin acceso total usuarios"
+CREATE POLICY "admin_all_usuarios"
   ON usuarios FOR ALL
+  USING (true);
+
+CREATE POLICY "admin_all_chatbot"
+  ON chatbot_knowledge FOR ALL
   USING (true);
 
 -- Usuario admin por defecto
