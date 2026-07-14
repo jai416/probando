@@ -1264,6 +1264,9 @@ body.dark-mode .message > div { background: #2320e0; color: #eee; border-color: 
 .chat-input input { flex:1; border-radius: 999px; padding: 10px 14px; border: 1px solid rgba(0,0,0,0.08); background: transparent; color: inherit; }
 .chat-input button { background: linear-gradient(135deg,var(--chat-accent),#a8152a); color: #fff; border: none; padding: 10px 14px; border-radius: 999px; cursor: pointer; font-weight:700; }
 .chat-input input:focus { outline: 3px solid rgba(252,209,22,0.18); }
+body.dark-mode .chat-input { background: linear-gradient(180deg, rgba(30,30,30,0.8), transparent); border-top-color: rgba(255,255,255,0.1); }
+body.dark-mode .chat-input input { border-color: rgba(255,255,255,0.15); color: #e0e0e0; }
+body.dark-mode .chat-header { background: linear-gradient(90deg, #1a1a2e, #16213e); }
 
 /* Typing indicator */
 .bot-typing { opacity: 0.8; font-style: italic; }
@@ -1522,6 +1525,16 @@ body.dark-mode .form-control:focus {
     max-width: 100%;
     overflow-wrap: break-word;
     word-break: break-word;
+}
+
+body.dark-mode .chat-messages .user-message {
+    background: var(--secondary, #d4af37) !important;
+    color: #000 !important;
+}
+
+body.dark-mode .chat-messages .bot-message {
+    background: #1a1a2e !important;
+    color: #e0e0e0 !important;
 }
 
 /* Píldoras interactivas (Quick replies) */
@@ -2075,6 +2088,15 @@ body.dark-mode .contact-form-container .form-group textarea:focus {
     .contact-form-container .form-group textarea { font-size: 16px; }
     .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .responsive-table { min-width: 400px; }
+    .chat-widget { width: calc(100% - 24px) !important; left: 12px !important; right: 12px !important; bottom: 70px !important; max-height: 60vh; }
+    .chat-open-button { bottom: 12px !important; right: 12px !important; left: auto !important; width: 50px !important; height: 50px !important; }
+    .back-to-top { bottom: 70px !important; right: 12px !important; width: 44px !important; height: 44px !important; }
+    .hero-title { font-size: 2rem !important; }
+    .hero-subtitle { font-size: 0.95rem !important; }
+    .section { padding: 40px 0 !important; }
+    .section-title { font-size: 1.8rem !important; }
+    .stat-number { font-size: 2rem !important; }
+    .footer-container { grid-template-columns: 1fr !important; gap: 25px !important; }
 }
 
 /* ---------- WHATSAPP FLOAT ---------- */

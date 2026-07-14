@@ -1,6 +1,6 @@
 // =====================================================
 // MAIN.JS - IP República Bolivariana de Venezuela
-// Funcionalidades principales del sitio v3.0
+// Funcionalidades principales del sitio v4.0
 // =====================================================
 (function() {
     'use strict';
@@ -14,6 +14,21 @@
             setTimeout(function() { preloader.remove(); }, 600);
         });
     }
+
+    // ---------- PWA INSTALL PROMPT ----------
+    var deferredPrompt = null;
+    function initPWA() {
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+    }
+    window.installPWA = function() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(function() { deferredPrompt = null; });
+        }
+    };
 
     // ---------- DARK MODE ----------
     function initDarkMode() {
@@ -402,6 +417,7 @@
         initScrollAnimations();
         initCounters();
         initWhatsApp();
+        initPWA();
         initLightbox();
         initFormValidation();
         initPhoneCopy();

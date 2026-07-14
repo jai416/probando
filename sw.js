@@ -1,24 +1,34 @@
-const CACHE_NAME = 'iprbv-v4';
+const CACHE_NAME = 'iprbv-v5';
 const ASSETS = [
     '/',
     '/index.html',
     '/styles.css',
     '/javascript/main.js',
     '/javascript/chatbot.js',
+    '/config.js',
     '/icons.svg',
+    '/assets/icon-512.png',
+    '/assets/icon-192.png',
     '/assets/icon-512.webp',
+    '/assets/apple-touch-icon.png',
     '/gallery.html',
     '/noticias.html',
     '/pagina-informatica.html',
     '/pagina-electronica.html',
     '/pagina-automatica.html',
     '/en/',
-    '/site.webmanifest'
+    '/site.webmanifest',
+    '/admin/login.html',
+    '/admin/'
 ];
 
 self.addEventListener('install', e => {
     e.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+        caches.open(CACHE_NAME).then(cache =>
+            Promise.all(
+                ASSETS.map(url => cache.add(url).catch(() => {}))
+            )
+        )
     );
     self.skipWaiting();
 });
@@ -33,13 +43,22 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+    if (e.request.method !== 'GET') return;
     e.respondWith(
-        caches.match(e.request).then(r => r || fetch(e.request).then(resp => {
-            if (resp.status === 200 && e.request.method === 'GET') {
-                const clone = resp.clone();
-                caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
-            }
-            return resp;
-        }).catch(() => caches.match('/index.html')))
+        caches.match(e.request).then(r => {
+            if (r) return r;
+            return fetch(e.request).then(resp => {
+                if (resp.status === 200) {
+                    const clone = resp.clone();
+                    caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+                }
+                return resp;
+            }).catch(() => {
+                if (e.request.destination === 'document') {
+                    return caches.match('/index.html');
+                }
+                return new Response('', { status: 503 });
+            });
+        })
     );
 });
