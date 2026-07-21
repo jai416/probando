@@ -233,39 +233,30 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 IP República Bolivariana de Venezuela. Todos los derechos reservados.</p>
                 <p>Sitio web creado por Jaison M. Herrera Romero, estudiante del centro.</p>
-                <p style="margin-top:8px;"><a href="/admin/login.html" style="color:rgba(255,255,255,0.6);font-size:0.75rem;text-decoration:underline;">Panel Admin</a></p>
             </div>
         </div>
     </footer>
     <script src="javascript/main.js" defer></script>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}</script>
-    <script src="config.js"></script>
-    <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-        const config = window.SUPABASE_CONFIG;
-        const supabase = createClient(config.url, config.key);
-        
-        async function loadDynamicNews() {
-            const { data } = await supabase.from('noticias').select('*').eq('publicada', true).order('created_at', { ascending: false });
-            if (data && data.length > 0) {
-                const grid = document.querySelector('.news-grid');
-                grid.innerHTML = data.map(n => `
-                    <article class="news-card">
-                        <img src="${n.imagen_url || 'assets/icon-512.webp'}" alt="${n.titulo}" loading="lazy" decoding="async">
-                        <div class="news-card-body">
-                            <div class="news-date">
-                                <svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>
-                                ${new Date(n.created_at).toLocaleDateString('es-ES', {day:'numeric',month:'long',year:'numeric'})}
-                            </div>
-                            <h3>${n.titulo}</h3>
-                            <p>${n.resumen || n.contenido?.substring(0, 150) + '...' || ''}</p>
-                            <span class="news-tag">${n.categoria}</span>
-                        </div>
-                    </article>
-                `).join('');
-            }
-        }
-        loadDynamicNews();
+    <script src="js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var noticias = window.datosInstitucionales.noticias;
+            if (!noticias || noticias.length === 0) return;
+            var grid = document.querySelector('.news-grid');
+            if (!grid) return;
+            grid.innerHTML = noticias.map(function(n) {
+                var fecha = new Date(n.fecha).toLocaleDateString('es-ES', {day:'numeric',month:'long',year:'numeric'});
+                return '<article class="news-card">' +
+                    '<img src="' + n.imagen + '" alt="' + n.titulo + '" loading="lazy" decoding="async">' +
+                    '<div class="news-card-body">' +
+                    '<div class="news-date"><svg class="icon" style="width:14px;height:14px;"><use href="icons.svg#clock"/></svg>' + fecha + '</div>' +
+                    '<h3>' + n.titulo + '</h3>' +
+                    '<p>' + n.resumen + '</p>' +
+                    '<span class="news-tag">' + n.categoria + '</span>' +
+                    '</div></article>';
+            }).join('');
+        });
     </script>
 </body>
 </html>

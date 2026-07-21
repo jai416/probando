@@ -1,77 +1,19 @@
 // =====================================================
 // CHATBOT IP REPÚBLICA BOLIVARIANA DE VENEZUELA
-// Versión 4.0 - Conocimiento desde Supabase
+// Versión 5.0 - Conocimiento desde data.js
 // =====================================================
 (function() {
     'use strict';
 
-    var KNOWLEDGE = {};
-    var lastKnowledgeUpdate = 0;
-    var CACHE_DURATION = 300000; // 5 minutos
-
-    // ---------- CARGAR CONOCIMIENTO DESDE SUPABASE ----------
-    async function loadKnowledge(forceRefresh) {
-        var now = Date.now();
-        if (!forceRefresh && (now - lastKnowledgeUpdate < CACHE_DURATION)) return;
-
-        try {
-            var scriptEl = document.querySelector('script[src*="config.js"]');
-            if (!scriptEl) return;
-
-            var config = window.SUPABASE_CONFIG;
-            if (!config) return;
-
-            var { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
-            var supabase = createClient(config.url, config.key);
-
-            var { data, error } = await supabase
-                .from('chatbot_knowledge')
-                .select('*')
-                .eq('activo', true);
-
-            if (error || !data || data.length === 0) return;
-
-            data.forEach(function(item) {
-                KNOWLEDGE[item.clave] = {
-                    response: item.respuesta,
-                    suggestions: item.sugerencias || []
-                };
-            });
-
-            lastKnowledgeUpdate = now;
-        } catch(e) {
-            console.log('Chatbot: usando conocimiento estático');
+    // ---------- CARGAR CONOCIMIENTO ----------
+    function getKnowledge() {
+        if (window.datosInstitucionales && window.datosInstitucionales.chatbot) {
+            return window.datosInstitucionales.chatbot;
         }
+        return {};
     }
 
-    // ---------- BASE DE CONOCIMIENTO ESTÁTICO (fallback) ----------
-    var STATIC_KNOWLEDGE = {
-        saludo: { response: "¡Hola! 👋 Bienvenido al IP República Bolivariana de Venezuela.\n\nSoy el asistente virtual del centro. ¿En qué puedo ayudarte?", suggestions: ["Especialidades", "Inscripción", "Contacto", "Proyectos"] },
-        saludo_tarde: { response: "¡Buenas tardes! 👋 ¿En qué puedo ayudarte?", suggestions: ["Especialidades", "Inscripción", "Contacto"] },
-        saludo_noche: { response: "¡Buenas noches! 👋 Aunque es tarde, estoy aquí para ayudarte.", suggestions: ["Especialidades", "Contacto"] },
-        adios: { response: "¡Hasta luego! 👋 ¡Que tengas un excelente día!", suggestions: [] },
-        gracias: { response: "¡De nada! 😊 ¿Tienes alguna otra pregunta?", suggestions: ["Especialidades", "Contacto"] },
-        si: { response: "¡Genial! 😊 ¿En qué te puedo ayudar?", suggestions: ["Especialidades", "Inscripción", "Proyectos"] },
-        no: { response: "No hay problema. Si necesitas algo más, aquí estaré. 👋", suggestions: ["Especialidades", "Contacto"] },
-        ayuda: { response: "❓ Puedo ayudarte con:\n\n• Especialidades del centro\n• Requisitos de inscripción\n• Infraestructura\n• Ubicación y contacto\n• Estadísticas\n• Proyectos en desarrollo\n\n¡Solo pregúntame!", suggestions: ["Especialidades", "Inscripción", "Contacto", "Proyectos"] },
-        que_puedes: { response: "🤖 Mis capacidades:\n\n📚 Especialidades\n📝 Inscripción\n🏫 Infraestructura\n📍 Contacto\n📊 Estadísticas\n🚀 Proyectos\n\n¡Pregúntame lo que necesites!", suggestions: ["Especialidades", "Ayuda"] },
-        chiste: { response: "😄 ¿Por qué el programador fue al médico? ¡Porque tenía un bug en el sistema! 😂\n\n¿Algo más?", suggestions: ["Especialidades", "Contacto"] },
-        horario: { response: "🕒 HORARIO\n\nLunes a Viernes: 8:00 AM - 4:00 PM\n\nLas clases se imparten por turnos según el grupo.", suggestions: ["Contacto", "Especialidades"] },
-        becas: { response: "🎓 BECAS\n\nEl centro ofrece becas según:\n• Rendimiento académico\n• Situación socioeconómica\n• Participación en actividades\n\nConsulta en secretaría.", suggestions: ["Inscripción", "Contacto"] },
-        titulo: { response: "🎓 TÍTULO\n\nAl egresar obtienes el título de Técnico Medio en tu especialidad, reconocido por el Ministerio de Educación.", suggestions: ["Inscripción", "Especialidades"] },
-        laboratorio: { response: "💻 LABORATORIOS\n\nContamos con 2 laboratorios de informática equipados con computadoras actualizadas, internet y software especializado.", suggestions: ["Infraestructura", "Informática"] },
-        comedor: { response: "🍽️ COMEDOR\n\nCapacidad para 150 comensales simultáneos. Cocina con cocción a gas.", suggestions: ["Infraestructura", "Dormitorios"] },
-        dormitorios: { response: "🛏️ DORMITORIOS\n\n8 dormitorios (4 habilitados: 2 femeninos y 2 masculinos).", suggestions: ["Infraestructura", "Comedor"] },
-        huerto: { response: "🌱 HUERTO ESCOLAR\n\nProyecto productivo donde los estudiantes aprenden agricultura y manejo sustentable. Producimos verduras frescas.", suggestions: ["Vida estudiantil", "Proyectos"] },
-        vida_estudiantil: { response: "🎉 VIDA ESTUDIANTIL\n\n• Huerto escolar\n• Actividades de emulación\n• Eventos culturales\n• Competencias deportivas\n• Jornadas de voluntariado", suggestions: ["Huerto", "Deportes", "Proyectos"] }
-    };
-
-    // Fusionar conocimiento estático con el de Supabase
-    function getKnowledge(key) {
-        return KNOWLEDGE[key] || STATIC_KNOWLEDGE[key] || null;
-    }
-
-    // ---------- NLP: LIMPIAR TEXTO ----------
+    // ---------- NLP ----------
     function cleanText(text) {
         return text.toLowerCase()
             .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -79,7 +21,6 @@
             .trim();
     }
 
-    // ---------- SINÓNIMOS ----------
     var SYNONYMS = {
         "especialidades": ["especialidades","carrera","carreras","estudiar","formacion","tecnico","que puedo"],
         "informatica": ["informatica","informatico","programacion","programar","software","desarrollo","computacion","redes"],
@@ -102,10 +43,13 @@
         "vida_estudiantil": ["vida","estudiantil","actividades","eventos"],
         "chiste": ["chiste","chistes","gracioso","reir","joke"],
         "ayuda": ["ayuda","ayudar","help","puedes","sabes"],
-        "titulo": ["titulo","certificado","graduar","egresar"]
+        "titulo": ["titulo","certificado","graduar","egresar"],
+        "laboratorio": ["laboratorio","computadoras","computadora"],
+        "comedor": ["comedor","comida","alimentacion"],
+        "dormitorios": ["dormitorio","dormir","alojamiento","internos"],
+        "becas": ["beca","becas","ayuda economica"]
     };
 
-    // ---------- PATRONES ----------
     var PATTERNS = [
         { keys: ["hola","buenos","buenas","saludos","hey"], intent: "saludo" },
         { keys: ["adios","hasta luego","nos vemos","bye","chao"], intent: "adios" },
@@ -114,7 +58,7 @@
         { keys: ["donde quedan","donde esta","como llego"], intent: "ubicacion" },
         { keys: ["que hora","a que hora","cuando abren"], intent: "horario" },
         { keys: ["telefono","numero de","llamar"], intent: "contacto" },
-        { keys: ["que puedo","que sabes","capaz"], intent: "que_puedes" },
+        { keys: ["que puedo","que sabes","capaz"], intent: "ayuda" },
         { keys: ["necesito ayuda","ayudame","help"], intent: "ayuda" },
         { keys: ["cuantos estudiantes","cuantos alumnos"], intent: "estadisticas" },
         { keys: ["que especialidad","que carrera"], intent: "especialidades" },
@@ -127,8 +71,8 @@
     ];
 
     function findIntent(clean) {
-        for (var key in KNOWLEDGE) { if (clean.includes(key)) return key; }
-        for (var key in STATIC_KNOWLEDGE) { if (clean.includes(key)) return key; }
+        var knowledge = getKnowledge();
+        for (var key in knowledge) { if (clean.includes(key)) return key; }
         for (var intent in SYNONYMS) {
             var aliases = SYNONYMS[intent];
             for (var i = 0; i < aliases.length; i++) {
@@ -152,7 +96,6 @@
 
     // ---------- UI ----------
     var lastMessageTime = 0;
-    var MIN_INTERVAL = 1000;
 
     function removeTypingIndicator() {
         var el = document.getElementById('chat-typing');
@@ -195,7 +138,6 @@
             showQuickReplies(suggestions);
         }
 
-        // Guardar en sesión
         try {
             var historial = JSON.parse(sessionStorage.getItem('chat_history')) || [];
             historial.push({ texto: text, esBot: isBot, sugerencias: suggestions || [] });
@@ -241,7 +183,7 @@
         if (!input || !input.value.trim()) return;
 
         var now = Date.now();
-        if (now - lastMessageTime < MIN_INTERVAL) return;
+        if (now - lastMessageTime < 1000) return;
         lastMessageTime = now;
 
         var text = input.value.trim();
@@ -256,7 +198,8 @@
         setTimeout(function() {
             var cleaned = cleanText(text);
             var intent = findIntent(cleaned);
-            var reply = getKnowledge(intent);
+            var knowledge = getKnowledge();
+            var reply = knowledge[intent];
 
             if (!reply) {
                 var fallbacks = [
@@ -286,7 +229,8 @@
                 showTypingIndicator();
                 setTimeout(function() {
                     var greetingKey = getGreetingIntent();
-                    var greeting = getKnowledge(greetingKey) || STATIC_KNOWLEDGE[greetingKey];
+                    var knowledge = getKnowledge();
+                    var greeting = knowledge[greetingKey];
                     if (greeting) {
                         reproducirSonido();
                         addMessage(greeting.response, true, greeting.suggestions);
@@ -320,17 +264,8 @@
             });
         }
 
-        // Cargar conocimiento de Supabase
-        loadKnowledge(false).then(function() { cargarHistorial(); });
-
-        // Actualizar conocimiento cada 5 minutos
-        setInterval(function() { loadKnowledge(false); }, CACHE_DURATION);
+        cargarHistorial();
     }
-
-    // Exponer función de refresh para el admin
-    window.refreshChatbotKnowledge = function() {
-        return loadKnowledge(true);
-    };
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initChatbot);

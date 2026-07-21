@@ -1,11 +1,11 @@
-const CACHE_NAME = 'iprbv-v5';
+const CACHE_NAME = 'iprbv-v6';
 const ASSETS = [
     '/',
     '/index.html',
     '/styles.css',
     '/javascript/main.js',
     '/javascript/chatbot.js',
-    '/config.js',
+    '/js/data.js',
     '/icons.svg',
     '/assets/icon-512.png',
     '/assets/icon-192.png',
@@ -17,9 +17,7 @@ const ASSETS = [
     '/pagina-electronica.html',
     '/pagina-automatica.html',
     '/en/',
-    '/site.webmanifest',
-    '/admin/login.html',
-    '/admin/'
+    '/site.webmanifest'
 ];
 
 self.addEventListener('install', e => {
