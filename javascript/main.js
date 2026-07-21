@@ -284,7 +284,6 @@
         if (!form) return;
 
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
             var name = form.querySelector('#name');
             var email = form.querySelector('#email');
             var message = form.querySelector('#message');
@@ -310,15 +309,20 @@
                 valid = false;
             }
 
-            if (valid) {
-                var btn = form.querySelector('button[type="submit"]');
-                if (btn) {
-                    btn.innerHTML = '&#10003; ¡Enviado!';
-                    btn.style.background = '#28a745';
-                }
-                showNotification('¡Mensaje enviado! Te contactaremos pronto.');
-                setTimeout(function() { form.reset(); if (btn) { btn.innerHTML = '<svg class="icon" viewBox="0 0 512 512" width="16" height="16" fill="currentColor"><use href="icons.svg#paper-plane"/></svg> Enviar Mensaje'; btn.style.background = ''; } }, 3000);
+            if (!valid) {
+                e.preventDefault();
+                return;
             }
+
+            // Dejar que Netlify maneje el submit
+            var btn = form.querySelector('button[type="submit"]');
+            if (btn) {
+                btn.innerHTML = '&#10003; ¡Enviado!';
+                btn.style.background = '#28a745';
+                btn.disabled = true;
+            }
+            showNotification('¡Mensaje enviado! Te contactaremos pronto.');
+            setTimeout(function() { form.reset(); if (btn) { btn.innerHTML = '<svg class="icon" viewBox="0 0 512 512" width="16" height="16" fill="currentColor"><use href="icons.svg#paper-plane"/></svg> Enviar Mensaje'; btn.style.background = ''; btn.disabled = false; } }, 3000);
         });
 
         form.querySelectorAll('input, textarea').forEach(function(field) {
